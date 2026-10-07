@@ -4,18 +4,19 @@ No `.env` file, API key, database, or server configuration is required. Never
 put secrets in `VITE_*` variables: browser build configuration is public.
 
 The development server binds to loopback (`127.0.0.1:5173`). After
-`npm run build`, use `npm run preview` to check the production output locally
-(normally `http://127.0.0.1:4173`). Preview is for local checks, not production
-hosting. A production host serves the contents of `dist/` as static files.
+`npm run build`, use `npm run preview` to check the production output
+(normally `http://127.0.0.1:4173`). Use a static-file host for production deployment. A production host serves the contents of `dist/` as static files.
 
 For a repository subpath such as GitHub Pages, build with its actual path:
 
 ```sh
-npm run build -- --base=/vega-studio/
+npm run typecheck
+npx vite build --base=/vega-studio/
+node scripts/copy-notices.mjs
 ```
 
 Replace `vega-studio` with the deployment path. Root hosting uses the default
-`/`. No deployment, repository URL, or live Kibana compatibility is implied.
+`/`.
 
 ## Example Elasticsearch dataset
 
@@ -29,7 +30,7 @@ In **Sample data → Add Elasticsearch dataset**, configure:
 | Dashboard filters/time | Off for this example |
 | Response property | `hits.hits._source` |
 
-Use this local response fixture:
+Use this response fixture:
 
 ```json
 {"hits":{"hits":[{"_source":{"queue":"demo","usage":42}}]}}
@@ -41,7 +42,7 @@ export writes Query DSL configuration for Kibana. Do not add credentials.
 Dashboard context/time options have additional validation described in
 [compatibility](compatibility.md) and [bindings](bindings.md).
 
-## Release environments
+## Development and CI
 
 `.nvmrc` records the verified Node version. `package-lock.json` pins resolved
 dependencies; use `npm ci` for reproducible installs. `CI=true` prevents browser

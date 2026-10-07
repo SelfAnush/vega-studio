@@ -1,14 +1,16 @@
 # Vega Studio
 
-A local, desktop-first visual designer for fixed-size Kibana panels. The element library covers styled text, rectangles, ellipses, lines, and horizontal/vertical bar charts with multiselect composition. The entire panel renders through Vega 6.2.0.
+A browser-based visual designer for Vega dashboards and Kibana panels. The element library covers styled text, rectangles, ellipses, lines, and horizontal/vertical bar charts with multiselect composition. The entire panel renders through Vega 6.2.0.
 
-Current application version: **1.2.0** (`package.json` is the source of truth). Completed in the working tree; no tag or publication is claimed — see [CHANGELOG.md](CHANGELOG.md) and [roadmap](docs/roadmap.md).
+Current application version: **1.2.0**. See the [changelog](CHANGELOG.md) and [roadmap](docs/roadmap.md).
 
-## Run
+## Development setup
 
 Use Node.js 22.12+ (verified with 22.22.2) and npm:
 
 ```sh
+git clone https://github.com/SelfAnush/vega-studio.git
+cd vega-studio
 npm ci
 npm run dev
 ```
@@ -26,12 +28,12 @@ npm run samples
 npm run notices
 ```
 
-Run `npm run preview` to smoke-test the production build locally. The production output is in `dist/`. Browser tests save initial and edited screenshots under `test-results/`. `npm run samples` regenerates the deliverable project/Vega pairs in `samples/` using the same compiler as the editor.
+Run `npm run preview` to check the production build. The production output is in `dist/`. Browser tests save initial and edited screenshots under `test-results/`. `npm run samples` regenerates the deliverable project/Vega pairs in `samples/` using the same compiler as the editor.
 
 `npm run test:production` runs core editing/save/open/export workflows against
 the built assets (run the build first). Builds include the project license and
 third-party notices. Regenerate notices after changing dependencies. The GitHub
-Actions workflow repeats validation on Linux; its remote run is not yet verified.
+Actions workflow runs validation on Linux and provides a downloadable production build.
 
 ## Editing
 
@@ -54,7 +56,7 @@ Sample data is an inline JSON array (Logstash queues, endpoints, service loads).
 
 Save downloads the complete version 4 project. Open accepts versions 1–4 (older projects migrate with equivalent visuals; see `docs/schema.md`) and validates schema, IDs, data, and chart bindings before replacing the document. An invalid file leaves the current project intact; replacing unsaved work prompts first. The saved indicator refers to the last downloaded/opened project, not browser persistence. Reloading starts the welcome screen; unsaved changes trigger the browser's leave warning. Undo history is limited to 100 edits and is not stored in project files.
 
-Export offers read-only Vega JSON, copy, download, and local parsing/rendering feedback, with two choices: **inline sample data** or an **Elasticsearch Query DSL source** (index, body, dashboard-filter/time integration, response extraction, local fixture preview — Studio never connects). In Kibana, create a Vega visualization, replace its specification, click Update, and save to a dashboard. This output is **fixed-size**, not automatically responsive to the dashboard container. See [compatibility evidence](docs/compatibility.md).
+Export offers read-only Vega JSON, copy, download, and in-browser validation and rendering feedback, with two choices: **inline sample data** or an **Elasticsearch Query DSL source** (index, body, dashboard-filter/time integration, response extraction, fixture preview — Studio never connects). In Kibana, create a Vega visualization, replace its specification, click Update, and save to a dashboard. This output is **fixed-size**, not automatically responsive to the dashboard container. See [compatibility evidence](docs/compatibility.md).
 
 ## Architecture
 
@@ -73,22 +75,17 @@ Export offers read-only Vega JSON, copy, download, and local parsing/rendering f
 
 Model and compiler do not import React. Stable IDs identify layers; array order specifies stacking. Fixed color properties use `{ kind: 'fixed', value }`; field bindings use `{ kind: 'field', field }`. Preview and export both call `compile`. The `DataSourceAdapter` interface isolates inline-data compilation for future source types. Draft pointer state is separate from the document: pointer moves never rebuild a Vega view. Committed changes rebuild the view; cleanup finalizes the previous view and its listeners. React runs in Strict Mode.
 
-Further documentation: [changelog](CHANGELOG.md), [roadmap](docs/roadmap.md), [v1.2.0 plan](docs/releases/v1.2.0-plan.md), [v1.2.0 implementation record](docs/completion-1.2.0.md), [shortcuts](docs/shortcuts.md), [data binding](docs/bindings.md), [schema and migration](docs/schema.md), [element matrix](docs/elements.md), [sample provenance](docs/sample-data.md), [compatibility](docs/compatibility.md).
+Further documentation: [changelog](CHANGELOG.md), [roadmap](docs/roadmap.md), [release notes](docs/releases/v1.2.0.md), [shortcuts](docs/shortcuts.md), [data binding](docs/bindings.md), [schema and migration](docs/schema.md), [element matrix](docs/elements.md), [sample data](docs/sample-data.md), [compatibility](docs/compatibility.md).
 
 ## Verification and scope
 
-Vitest covers project round trips, invalid versions/data, field discovery, compiler output, threshold boundaries, SVG rendering, field-name escaping, locked edits, and history. Playwright covers a real edit → save/open → export workflow, drag/resize and undo, lock behavior, and invalid files/data. No Kibana instance was available; these are local runtime and browser checks, not a claim of testing inside Kibana.
+Vitest covers project round trips, invalid versions/data, field discovery, compiler output, threshold boundaries, SVG rendering, field-name escaping, locked edits, and history. Playwright covers a real edit → save/open → export workflow, drag/resize and undo, lock behavior, and invalid files/data. Live Kibana integration remains unverified; see the compatibility guide for supported export behavior.
 
 Desktop layout requires at least 1024 CSS pixels; 1440 or wider is recommended. Long category labels are clipped to their allotted width. Canvas dimensions are 400–4000 × 300–4000, up to 100 layers and 1000 sample rows. Very dense charts may require larger groups to keep labels legible. The Vega runtime accounts for most of the production bundle size. No arbitrary Vega import, live data fetching, or auto-layout is included (Elasticsearch export is configuration-only; Studio never connects). Editor groups nest and export as nested Vega groups; arbitrary Vega group features (faceting, group-level scales) are out of scope.
 
 Future elements and integrations are listed with Markdown checkboxes in the [roadmap](docs/roadmap.md). Planned and partial features remain unchecked; no future release date or version is promised.
 
-## Public release preparation
-
-See [release readiness](docs/release-readiness.md) for the current audit, validation
-results, and remaining publication gates. No public GitHub repository, tag, or
-release is claimed. `private: true` prevents accidental npm publication; it does
-not prevent publishing this source repository on GitHub.
+## Resources
 
 - [Configuration examples and static hosting](docs/configuration.md)
 - [Contribution guide](CONTRIBUTING.md)

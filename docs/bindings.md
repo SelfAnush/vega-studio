@@ -12,7 +12,7 @@ to a hardcoded query per element:
 - `inline`: rows stored in the project file.
 - `elasticsearch`: index pattern, Query DSL body, extraction path,
   optional dashboard-filter (`%context%`) and dashboard-time
-  (`%timefield%`) integration, plus a response fixture for local preview.
+  (`%timefield%`) integration, plus a response fixture for fixture preview.
   Studio never queries Elasticsearch; without a fixture the preview
   renders no tuples.
 

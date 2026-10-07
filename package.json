@@ -41,9 +41,17 @@
     "vite": "8.3.0",
     "vitest": "5.0.1"
   },
-  "description": "Local visual designer for fixed-size Vega dashboards and Kibana exports",
+  "description": "Browser-based visual designer for Vega dashboards and Kibana panels",
   "engines": {
     "node": ">=22.12.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SelfAnush/vega-studio.git"
+  },
+  "homepage": "https://github.com/SelfAnush/vega-studio#readme",
+  "bugs": {
+    "url": "https://github.com/SelfAnush/vega-studio/issues"
+  }
 }

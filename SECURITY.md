@@ -1,6 +1,6 @@
 # Security
 
-Vega Studio is a local browser editor without a backend, accounts, analytics,
+Vega Studio is a browser-based visual editor without a backend, accounts, analytics,
 or live Elasticsearch connections. Exported Kibana specifications can query
 Elasticsearch when executed inside Kibana; that environment controls access.
 
@@ -15,10 +15,10 @@ other applications. Dependency advisories are checked with `npm audit`.
 
 ## Reporting a vulnerability
 
-Use the repository's **Security → Report a vulnerability** feature if the
-maintainer has enabled private reporting. If unavailable, ask the maintainer
-for a private contact without posting exploit details or sensitive data in a
-public issue. A private reporting contact must be established before publication.
+Use [private vulnerability reporting](https://github.com/SelfAnush/vega-studio/security/advisories/new)
+when enabled, also available under **Security → Report a vulnerability**.
+If unavailable, ask the maintainer for a private contact without posting exploit
+details or sensitive data in a public issue. The maintainer should enable private
+reporting as part of making the repository public.
 
-No response-time guarantee or supported-release security policy has been
-established yet. The repository is being prepared for its first public release.
+Security reports are reviewed by the maintainer; no response-time guarantee is provided.

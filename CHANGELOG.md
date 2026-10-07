@@ -7,13 +7,21 @@ identities are: application release (`package.json`), project document
 schema (`src/model.ts`, currently `4`), Vega runtime (`6.2.0` pinned),
 Kibana target (`9.2.3`).
 
-## Unreleased — Properties panel
+## Unreleased
+
+- Updated the transitive build dependency `source-map-js` from 1.2.1 to 1.2.2
+  for GHSA-68fv-2mgg-jv7q; CI now checks high/critical dependency advisories.
+
+- Added MIT licensing, third-party notices included in builds, reproducible
+  setup commands, strict unused-code checks, and release documentation.
+- Added GitHub issue/PR templates, repository links, v1.2.0 release notes,
+  manual validation runs, and tested-build artifact upload in CI.
 
 - Reviewed application-wide UI and added a searchable, registry-driven element
   picker, shared fields/sections/panel headers/icons, and accessible export tabs.
 - Improved dialog navigation, action placement, source draft retention, and
   clipboard-error recovery. Refined Welcome and zoom-independent empty guidance.
-- Documented extension patterns and the UI assessment in `docs/ui-patterns.md`.
+- Documented shared UI components and extension patterns in `docs/ui-patterns.md`.
 
 - Replaced paired field grids with a single vertical stack throughout the
   inspector, including paint controls, data rules, dimensions, and layer actions.
@@ -30,13 +38,7 @@ Kibana target (`9.2.3`).
 
 ## [1.2.0] — Editor interaction & data-driven elements
 
-Completed in the working tree; not tagged or published (no Git tags or
-release dates are claimed in this workspace). This release ships the
-previously unreleased v1.1.0 element/configuration scope below together
-with the new v1.2.0 scope. Evidence: `docs/completion-1.2.0.md`,
-`docs/releases/v1.2.0-plan.md`.
-
-### Added (v1.1.0 scope, shipped)
+### Elements and visual configuration
 
 - Enhanced text: system font families, alignment, vertical placement,
   line height, opacity, explicit multiline content.
@@ -55,7 +57,7 @@ with the new v1.2.0 scope. Evidence: `docs/completion-1.2.0.md`,
 - Project document schema `3` with migration from versions 1–2; three new
   editable examples (shapes, bars, dashboard) with synthetic fixtures.
 
-### Added (v1.2.0 scope)
+### Editor interaction and data bindings
 
 - Full-window layout: editor and Welcome fit the viewport at 100% zoom
   (verified 1366×768 and 1920×1080); panels scroll internally; dialogs
@@ -79,15 +81,12 @@ with the new v1.2.0 scope. Evidence: `docs/completion-1.2.0.md`,
   signals and transforms.
 - Elasticsearch-ready sources: named datasets, Query DSL export with
   `%context%`/`%timefield%` integration and `format.property`
-  extraction, response fixtures for local preview, dual inline/ES export
+  extraction, response fixtures for fixture preview, dual inline/ES export
   choices with explicit blockers.
 - Project document schema `4` with migration from versions 1–3; reactive
   example where every element reads one dataset.
 
 ## [1.0.0]
-
-Foundation baseline, reconstructed from `docs/completion.md`. No release
-date or Git tag is recorded in this workspace, so none is claimed here.
 
 ### Added
 
