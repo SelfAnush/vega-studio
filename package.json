@@ -50,7 +50,7 @@
     "type": "git",
     "url": "git+https://github.com/SelfAnush/vega-studio.git"
   },
-  "homepage": "https://github.com/SelfAnush/vega-studio#readme",
+  "homepage": "https://vegastudio-app.vercel.app/",
   "bugs": {
     "url": "https://github.com/SelfAnush/vega-studio/issues"
   }

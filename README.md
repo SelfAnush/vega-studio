@@ -1,5 +1,7 @@
 # Vega Studio
 
+[Open Vega Studio](https://vegastudio-app.vercel.app/)
+
 A browser-based visual designer for Vega dashboards and Kibana panels. The element library covers styled text, rectangles, ellipses, lines, and horizontal/vertical bar charts with multiselect composition. The entire panel renders through Vega 6.2.0.
 
 Current application version: **1.2.0**. See the [changelog](CHANGELOG.md) and [roadmap](docs/roadmap.md).
