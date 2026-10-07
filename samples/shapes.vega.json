@@ -1,0 +1,254 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Shapes and text — inline sample data",
+  "width": 900,
+  "height": 560,
+  "padding": 0,
+  "autosize": "none",
+  "background": "#ffffff",
+  "data": [
+    {
+      "name": "source",
+      "values": []
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 32
+          },
+          "text": {
+            "value": "Shapes, lines, and styled text"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 34
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 28
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#202b40"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 820
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 450
+          },
+          "y": {
+            "value": 112
+          },
+          "text": {
+            "value": "Centered multiline text\nSecond line stays centered"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 22
+          },
+          "font": {
+            "value": "Georgia, Times New Roman, serif"
+          },
+          "fontSize": {
+            "value": 16
+          },
+          "fontWeight": {
+            "value": "normal"
+          },
+          "align": {
+            "value": "center"
+          },
+          "baseline": {
+            "value": "middle"
+          },
+          "fill": {
+            "value": "#43516b"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 820
+          }
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 168
+          },
+          "width": {
+            "value": 300
+          },
+          "height": {
+            "value": 150
+          },
+          "fill": {
+            "value": "#5965dd"
+          },
+          "stroke": {
+            "value": "#202b40"
+          },
+          "strokeWidth": {
+            "value": 3
+          },
+          "opacity": {
+            "value": 1
+          },
+          "cornerRadius": {
+            "value": 16
+          },
+          "strokeDash": {
+            "value": [
+              6,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "path",
+      "encode": {
+        "update": {
+          "path": {
+            "value": "M 380 243 a 75 75 0 1 0 150 0 a 75 75 0 1 0 -150 0"
+          },
+          "fill": {
+            "value": "transparent"
+          },
+          "stroke": {
+            "value": "#ee7686"
+          },
+          "strokeWidth": {
+            "value": 4
+          },
+          "opacity": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "type": "rule",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 570
+          },
+          "y": {
+            "value": 168
+          },
+          "x2": {
+            "value": 820
+          },
+          "y2": {
+            "value": 318
+          },
+          "stroke": {
+            "value": "#67b9a0"
+          },
+          "strokeWidth": {
+            "value": 4
+          },
+          "strokeCap": {
+            "value": "round"
+          },
+          "strokeOpacity": {
+            "value": 1
+          },
+          "strokeDash": {
+            "value": [
+              6,
+              4
+            ]
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 360
+          },
+          "text": {
+            "value": "Dashed card, outlined circle, and a round-capped connector.\nEverything here exports to plain Vega marks."
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 21
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": "normal"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#43516b"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 820
+          }
+        }
+      }
+    }
+  ]
+}

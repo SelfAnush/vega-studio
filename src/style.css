@@ -1,0 +1,845 @@
+@import "tailwindcss";
+@import "./workspace.css";
+@import "./welcome.css";
+@import "./dialogs.css";
+/* ---------------------------------------------------------------------------
+   TOKENS
+
+   Spacing is a 4px scale. The design reference calls for an 8px base, but this
+   is a dense fixed-panel editor with 11px labels, so 4px is the correct base
+   here; every value must come from this scale rather than an ad-hoc px count.
+   --------------------------------------------------------------------------- */
+:root {
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Concentric radii: a nested element's radius = its container's radius
+     minus the container's padding. Pair with `overflow: hidden` where a
+     control strip has no padding of its own. */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+
+  /* One control height for every input-like control in a column. */
+  --control-h: 32px;
+  --control-h-lg: 36px;
+
+  /* Inspector density. A dense pro tool needs tighter rhythm than the
+     16px-everything default; these four values drive every vertical step in
+     the Properties panel so the rhythm cannot drift again. */
+  --field-gap: 4px;
+  --field-mb: 12px;
+  --section-pad: 12px;
+  --title-gap: 8px;
+
+  /* Chrome bar heights. topbar/toolbar/panel-title/canvas-heading are peers
+     and must share one value each, never a 52/53/55 drift. */
+  --bar-h: 60px;
+  --subbar-h: 52px;
+
+  /* Fixed z-index scale; no arbitrary values. */
+  --z-grid: 1;
+  --z-sticky: 2;
+  --z-guide: 4;
+  --z-ghost: 5;
+  --z-menu: 30;
+  --z-overlay: 40;
+  --z-dialog: 41;
+  --z-popover: 50;
+
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  font-synthesis: none;
+  color-scheme: dark;
+  --bg: #11141c;
+  --surface: #191e29;
+  --raised: #222938;
+  --input: #121722;
+  --hover: #2b3445;
+  --border: #343e51;
+  --workspace: #10141d;
+  --dot: #333d52;
+  --shadow: #0005;
+
+  /* Text hierarchy is opacity of ONE hue, never three different hues. */
+  --fg-rgb: 224 230 241;
+  --text: rgb(var(--fg-rgb) / 1);
+  --muted: rgb(var(--fg-rgb) / 0.72);
+  --faint: rgb(var(--fg-rgb) / 0.56);
+
+  /* List row states. Selection is a neutral elevation, not a coloured tint:
+     a purple fill plus an accent bar plus a border box is three signals
+     competing for one job. */
+  --row-hover: #212a3a;
+  --row-active: #2c3648;
+  --row-active-text: rgb(var(--fg-rgb) / 1);
+
+  /* One accent expressed at several opacities. */
+  --accent-rgb: 152 164 255;
+  --accent: rgb(var(--accent-rgb));
+  --accent-bg: rgb(var(--accent-rgb) / 0.2);
+  --primary: rgb(var(--accent-rgb));
+  --primary-text: #13182e;
+
+  --danger-bg: #3a2530;
+  --danger: #ffd0d8;
+  color: var(--text);
+  background: var(--bg);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f2f4f9;
+  --surface: #ffffff;
+  --raised: #f0f3f9;
+  --input: #f7f9fc;
+  --hover: #e8edf6;
+  --border: #cbd3e2;
+  --workspace: #e9edf5;
+  --dot: #c6cfdf;
+  --shadow: #21334d17;
+
+  --fg-rgb: 32 43 64;
+  --text: rgb(var(--fg-rgb) / 1);
+  --muted: rgb(var(--fg-rgb) / 0.74);
+  --faint: rgb(var(--fg-rgb) / 0.66);
+
+  --row-hover: #f4f6fb;
+  --row-active: #e6ecf7;
+
+  --accent-rgb: 77 93 210;
+  --accent: rgb(var(--accent-rgb));
+  --accent-bg: rgb(var(--accent-rgb) / 0.12);
+  --primary: rgb(var(--accent-rgb));
+  --primary-text: #ffffff;
+
+  --danger-bg: #fff0f2;
+  --danger: #982741;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+/* Explicit control line-height: `font: inherit` alone leaves native form
+   controls on `normal`, which drifts inside a fixed-height box. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  line-height: 1.4;
+}
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+button:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+/* The primary variant must not change the button's box size, or it sits
+   visibly off-baseline next to its siblings in a centre-aligned bar. */
+button.primary {
+  background: var(--primary);
+  color: var(--primary-text);
+  font-weight: 600;
+}
+button.primary:hover {
+  filter: brightness(1.08);
+}
+.app {
+  height: 100dvh;
+  min-width: 1024px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.topbar {
+  height: var(--bar-h);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-4);
+  gap: var(--space-4);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  font-size: 22px;
+  letter-spacing: -0.8px;
+  font-weight: 600;
+  color: var(--text);
+}
+.brand:hover {
+  background: none;
+}
+.brand > span:not(.brand-icon) {
+  font-weight: 400;
+  color: var(--muted);
+}
+.brand-icon {
+  display: flex;
+  background: var(--primary);
+  color: var(--primary-text);
+  padding: var(--space-2);
+  border-radius: var(--radius-lg);
+  margin-right: var(--space-2);
+}
+/* One divider height for both bars. */
+.top-divider,
+.toolbar-divider {
+  width: 1px;
+  height: 20px;
+  flex-shrink: 0;
+  background: var(--border);
+}
+.project-title {
+  font-size: var(--text-sm, 12px);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Was 8px, which is illegible for a status word. */
+.save-state {
+  color: var(--faint);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.save-state.dirty {
+  color: var(--accent);
+}
+.top-actions {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.toolbar {
+  height: var(--subbar-h);
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+/* Bar buttons get an explicit integer height. Left to padding they land on
+   36.19px, and the icon variant sat at 32px beside them. Vertical padding is
+   dropped for the same reason as .field input: it would clip the line box. */
+.topbar button,
+.toolbar button {
+  height: var(--control-h-lg);
+  padding: 0 var(--space-3);
+}
+.add-button {
+  border-color: var(--border);
+  background: var(--raised);
+  color: var(--text);
+}
+/* Height here, not only in the bar rules: this class is also used in the
+   Layers header, where an SVG-only button otherwise collapses to 18px. The
+   .topbar/.toolbar rules outrank it and set 36px there. */
+.icon-button {
+  height: var(--control-h);
+  min-width: var(--control-h);
+  padding: 0 var(--space-2);
+}
+.icon-button.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.toolbar-divider {
+  margin: 0 var(--space-2);
+}
+.badge {
+  background: var(--raised);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  white-space: nowrap;
+}
+.editor-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+/* Drags anywhere in the panel must not select its own labels and help text;
+   only the editable fields keep text selection. */
+.properties {
+  user-select: none;
+}
+.properties input,
+.properties textarea {
+  user-select: text;
+}
+/* 1px rule, 9px hit area, so the divider is easy to grab without showing a
+   fat grab bar. */
+.panel-divider {
+  flex: 0 0 auto;
+  width: 1px;
+  align-self: stretch;
+  background: var(--border);
+  cursor: col-resize;
+  position: relative;
+  touch-action: none;
+}
+.panel-divider::after {
+  content: "";
+  position: absolute;
+  inset: 0 -4px;
+}
+.panel-divider:hover,
+.panel-divider:focus-visible {
+  background: var(--accent);
+  outline: none;
+}
+body.resizing-panel {
+  cursor: col-resize;
+  user-select: none;
+}
+.layers {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-title {
+  height: var(--subbar-h);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.muted {
+  color: var(--muted);
+}
+.canvas-entry {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-2) var(--space-1) var(--space-1);
+  text-align: left;
+  padding: var(--space-2);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: default;
+}
+.canvas-entry:hover {
+  background: var(--row-hover);
+}
+.canvas-entry.active {
+  background: var(--row-active);
+  border-color: transparent;
+  color: var(--row-active-text);
+}
+.canvas-entry small {
+  display: block;
+  font-size: 10px;
+  color: var(--faint);
+  margin-top: var(--space-1);
+}
+.artboard-icon {
+  width: var(--space-6);
+  height: 20px;
+  border: 1px dashed var(--muted);
+  background: var(--raised);
+  flex-shrink: 0;
+}
+.layer-list {
+  padding: 0 var(--space-1);
+  overflow: auto;
+  flex: 1;
+  position: relative;
+}
+/* Row height is the layer density control. 32px + 1px margin = 34px per
+   layer, against Photoshop's ~28px and Figma's ~32px. The 24px action buttons
+   still sit inside a 32px row with 4px of clearance. */
+.layer-row {
+  height: var(--control-h);
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  margin: 1px 0;
+  cursor: default;
+  touch-action: none;
+  user-select: none;
+}
+.layer-row:hover {
+  background: var(--row-hover);
+}
+/* The row owns the hover state. The name is a <button>, so the base
+   `button:hover` background also fired inside the row and stacked a second
+   highlight on top of it, which read as a nested select control. The icon
+   buttons brighten on hover instead, so no inner box appears anywhere. */
+.layer-name:hover {
+  background: transparent;
+  color: inherit;
+}
+.layer-action:hover {
+  background: transparent;
+  color: var(--text);
+}
+/* Selection is one neutral elevation. No accent fill, no left bar, no border
+   box — the row background alone carries the state, as in Photoshop. */
+.layer-row.active {
+  background: var(--row-active);
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--row-active-text);
+}
+.layer-row.active .layer-name,
+.layer-row.active .layer-action {
+  color: var(--row-active-text);
+}
+.layer-row.dragging {
+  opacity: 0.4;
+}
+.layer-row.locked-row {
+  cursor: not-allowed;
+}
+/* Photoshop-style insertion indicator for drag reordering. */
+.drop-line {
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  height: 2px;
+  margin-top: -1px;
+  background: var(--accent);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+  pointer-events: none;
+  z-index: var(--z-sticky);
+}
+/* The row is a fixed height and centres its children, so vertical padding
+   here would only push the label off-centre. */
+.layer-name {
+  justify-content: flex-start;
+  flex: 1;
+  min-width: 0;
+  padding: 0 var(--space-1);
+  gap: var(--space-2);
+  font-size: 11px;
+}
+.layer-name span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.layer-name svg {
+  flex-shrink: 0;
+}
+.layer-action {
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  flex-shrink: 0;
+  color: var(--faint);
+}
+.tree-spacer {
+  width: var(--space-3);
+  flex-shrink: 0;
+}
+.hidden-layer .layer-name {
+  opacity: 0.45;
+}
+.layer-tools {
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+.layer-tools > span {
+  flex: 1;
+}
+.layer-tools button {
+  height: 28px;
+  padding: 0 var(--space-2);
+}
+.layer-hint {
+  color: var(--faint);
+  font-size: 10px;
+  padding: 0 var(--space-3) var(--space-2);
+  margin: 0;
+}
+.empty-state {
+  padding: var(--space-8) var(--space-4);
+  color: var(--faint);
+  text-align: center;
+  line-height: 1.6;
+  font-size: var(--text-sm, 12px);
+}
+.empty-state svg {
+  margin: 0 auto var(--space-3);
+}
+.empty-state p {
+  color: var(--text);
+  margin: 0 0 var(--space-1);
+}
+.empty-state span {
+  font-size: 11px;
+}
+.properties {
+  width: 288px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-left: 0;
+  overflow-y: auto;
+}
+.properties .sidebar-title {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  z-index: var(--z-sticky);
+}
+.property-intro {
+  padding: var(--space-3) var(--space-4);
+}
+.property-intro h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 var(--space-1);
+  text-wrap: balance;
+}
+.property-intro p,
+.section-help {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.properties section {
+  border-top: 1px solid var(--border);
+  padding: var(--section-pad) var(--space-4);
+}
+.properties h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  font-weight: 600;
+  font-size: var(--text-sm, 12px);
+  margin: 0 0 var(--title-gap);
+}
+.properties h3 .muted,
+.properties summary .muted {
+  font-size: 10px;
+  font-weight: 400;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  margin-bottom: var(--field-mb);
+  min-width: 0;
+}
+/* align-items was missing, so an 11px label and a 10px <small> did not share
+   a reliable baseline. */
+.field > span {
+  color: var(--muted);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.field small {
+  color: var(--faint);
+}
+.field input,
+.field select,
+.field textarea {
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  /* Fixed height, so padding is horizontal only. Vertical padding here would
+     eat the content box (32 - 16 - 2 = 14px) and clip the 18.2px line box. */
+  padding: 0 var(--space-3);
+  width: 100%;
+  height: var(--control-h);
+  color: var(--text);
+  min-width: 0;
+  /* Numeric inspector values (X/Y/W/H, thresholds, axis max) must align on
+     the digit. */
+  font-variant-numeric: tabular-nums;
+}
+.field textarea {
+  height: auto;
+  min-height: 64px;
+  padding: var(--space-2) var(--space-3);
+  resize: vertical;
+}
+/* Native WebKit spinners appear on hover only, so the two numeric fields in a
+   row render differently from each other. Arrow keys still work. */
+.field input[type="number"] {
+  appearance: textfield;
+}
+.field input[type="number"]::-webkit-outer-spin-button,
+.field input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+.properties details {
+  border-top: 1px solid var(--border);
+  padding: var(--section-pad) var(--space-4);
+}
+/* Collapsible sections must read as peers of the always-open <h3> headers, so
+   the summary matches their type and carries a chevron instead of the native
+   disclosure triangle. */
+.properties summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-size: var(--text-sm, 12px);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+}
+.properties summary::-webkit-details-marker {
+  display: none;
+}
+.properties summary::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 18 15 12 9 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform 120ms ease-out;
+}
+.properties details[open] > summary {
+  margin-bottom: var(--title-gap);
+}
+.properties details[open] > summary::before {
+  transform: rotate(90deg);
+}
+.properties summary:hover {
+  color: var(--text);
+}
+/* The native arrow is drawn at the right edge, so a token-sized gutter is
+   enough; the old 4px override misaligned select text against inputs. */
+.field select {
+  padding-right: var(--space-3);
+}
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--space-3);
+}
+/* Concentric radius: the strip has no padding of its own, so clipping to its
+   own curve is the correct fix and the buttons stay square. */
+.alignment {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.alignment button {
+  flex: 1;
+  height: var(--control-h);
+  padding: 0;
+  border-radius: 0;
+}
+.check-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--muted);
+  font-size: 11px;
+  min-height: 24px;
+  margin-bottom: var(--space-2);
+  cursor: pointer;
+}
+.check-field input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+/* A derived value, shown next to real inputs so the Thresholds ladder reads
+   evenly. Deliberately not an input: Healthy has no editable threshold. */
+.static-field {
+  display: flex;
+  align-items: center;
+  height: var(--control-h);
+  padding: 0 var(--space-3);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--faint);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.section-help {
+  margin-top: calc(var(--space-1) * -2);
+  margin-bottom: var(--space-2);
+}
+.notice {
+  margin: var(--space-2) var(--space-4);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.properties fieldset:disabled {
+  opacity: 0.6;
+}
+.error,
+.error-banner {
+  background: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger);
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  white-space: pre-wrap;
+  font-size: 11px;
+}
+.error {
+  max-height: 120px;
+  overflow: auto;
+  margin-top: var(--space-3);
+}
+.error-banner {
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  /* A full-width single-line bar: 12px of vertical padding plus a 26px button
+     made this 52px tall for one line of text. Compact vertical padding, roomy
+     horizontal padding, which is what a wide bar wants. */
+  padding: var(--space-1) var(--space-4);
+  max-height: 110px;
+  overflow: auto;
+  flex-shrink: 0;
+  font-size: var(--text-sm, 12px);
+}
+/* "Dismiss" inherited the transparent base-button style and read as plain
+   text, so the only way to clear an error was unlabelled. */
+.error-banner button {
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  background: transparent;
+  font-weight: 600;
+}
+.error-banner button:hover {
+  background: var(--danger);
+  color: var(--danger-bg);
+}
+/* Firefox draws its own scrollbar, which changes the Layers/Properties
+   content box and shifts everything downstream. Match it to the WebKit one. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: var(--radius-sm);
+}
+
+/* Icon stroke weight follows the adjacent text weight: 1.5px beside regular
+   small text, 2px reserved for the larger marks. Lucide sets stroke-width as a
+   presentation attribute, so CSS wins without touching the components. */
+.icon-button svg,
+.layer-action svg,
+.layer-tools svg,
+.alignment svg,
+.zoom-control svg,
+.dropdown svg,
+.grid-menu svg {
+  stroke-width: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .layers {
+    width: 208px;
+  }
+  .properties {
+    width: 256px;
+  }
+  .topbar {
+    gap: var(--space-3);
+  }
+  .top-actions button {
+    padding: 0 var(--space-2);
+  }
+  .project-title {
+    font-size: 11px;
+  }
+  .brand {
+    font-size: 20px;
+  }
+}

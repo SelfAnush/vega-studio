@@ -1,0 +1,295 @@
+.welcome-app {
+  background:
+    radial-gradient(ellipse at 60% 15%, var(--accent-bg), transparent 55%),
+    var(--bg);
+  overflow: hidden;
+}
+.welcome-app .welcome {
+  flex: 1;
+  min-height: 0;
+}
+.welcome {
+  overflow: auto;
+  padding: var(--space-12) var(--space-8) var(--space-6);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.welcome-intro {
+  margin-bottom: var(--space-8);
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.7px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.welcome h1 {
+  font-size: 42px;
+  letter-spacing: -1.5px;
+  line-height: 1.16;
+  font-weight: 600;
+  margin: var(--space-4) 0;
+  text-wrap: balance;
+}
+.welcome h1 span {
+  color: var(--muted);
+  font-weight: 400;
+}
+.welcome-intro > p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--muted);
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+.welcome-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+.new-project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: 0 15px 50px var(--shadow);
+}
+.welcome-card-heading {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+.welcome h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 var(--space-1);
+  color: var(--text);
+  text-wrap: balance;
+}
+.welcome-card-heading p,
+.welcome-secondary p {
+  font-size: var(--text-sm, 12px);
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+  text-wrap: pretty;
+}
+.welcome-icon {
+  display: flex;
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--accent-bg);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.welcome .field {
+  margin-bottom: var(--space-4);
+}
+.welcome .field > span {
+  font-size: var(--text-sm, 12px);
+}
+.welcome .field input {
+  height: var(--control-h-lg);
+}
+.create-button {
+  width: 100%;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  height: var(--space-10);
+}
+.welcome-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.open-project-card {
+  display: flex;
+  text-align: left;
+  justify-content: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+}
+.open-project-card > svg:first-child {
+  color: var(--accent);
+}
+.open-project-card > svg:last-child {
+  margin-left: auto;
+}
+.example-card {
+  padding: 0;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface);
+  overflow: hidden;
+  text-align: left;
+  flex: 1;
+  white-space: normal;
+}
+.example-art {
+  height: 180px;
+  background: linear-gradient(120deg, #20283e, #343959);
+  position: relative;
+  padding: var(--space-6) var(--space-10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mini-chart {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-8);
+  border-left: 1px solid #707da366;
+}
+.mini-chart > span {
+  display: block;
+  height: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: #929dff;
+  box-shadow: 90px 0 0 #7885f515;
+}
+.mini-chart > span:nth-child(1) {
+  width: 36%;
+}
+.mini-chart > span:nth-child(2) {
+  width: 57%;
+}
+.mini-chart > span:nth-child(3) {
+  width: 75%;
+  background: #e8b65c;
+}
+.mini-chart > span:nth-child(4) {
+  width: 92%;
+  background: #ee7686;
+}
+.mini-chart > span:nth-child(5) {
+  width: 48%;
+}
+.example-art-label {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: 10px;
+  color: #c5cfea;
+}
+.example-card-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-5) var(--space-6);
+}
+/* Was 8px, which is illegible for a category label. */
+.example-card-label .eyebrow {
+  font-size: 10px;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+.more-examples {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+.more-example {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  text-align: left;
+}
+.more-example h2 {
+  font-size: 14px;
+  margin: 0 0 var(--space-1);
+  text-wrap: balance;
+}
+.more-example p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 0;
+  text-wrap: pretty;
+}
+.welcome-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  color: var(--faint);
+  margin-top: var(--space-8);
+  font-size: 11px;
+}
+@media (max-height: 850px) {
+  .welcome {
+    padding-top: var(--space-8);
+  }
+  .welcome h1 {
+    font-size: 35px;
+  }
+  .welcome-intro {
+    margin-bottom: var(--space-6);
+  }
+  .welcome-intro > p br {
+    display: none;
+  }
+  .new-project-card {
+    padding: var(--space-6);
+  }
+  .welcome-card-heading {
+    margin-bottom: var(--space-5);
+  }
+  .example-art {
+    height: 156px;
+  }
+}
+@media (max-height: 800px) {
+  .welcome {
+    padding: var(--space-5) var(--space-8) var(--space-4);
+  }
+  .welcome h1 {
+    font-size: 29px;
+    margin: var(--space-3) 0;
+  }
+  .welcome-intro {
+    margin-bottom: var(--space-4);
+  }
+  .welcome-grid {
+    gap: var(--space-4);
+  }
+  .new-project-card {
+    padding: var(--space-5);
+  }
+  .welcome .field {
+    margin-bottom: var(--space-3);
+  }
+  .example-art {
+    height: 108px;
+  }
+  .example-card-label {
+    padding: var(--space-3) var(--space-4);
+  }
+  .more-examples {
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+  }
+  .more-example {
+    padding: var(--space-2) var(--space-3);
+  }
+  .welcome-note {
+    margin-top: var(--space-4);
+  }
+}

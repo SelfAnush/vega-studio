@@ -1,0 +1,485 @@
+/* Concentric: outer 8px - 4px padding = 4px on each menu item. */
+.dropdown {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-1);
+  min-width: 208px;
+  box-shadow: 0 12px 40px var(--shadow);
+  z-index: var(--z-menu);
+}
+.dropdown [role="menuitem"] {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: pointer;
+}
+.dropdown [data-highlighted] {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.dropdown-label {
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--faint);
+  padding: var(--space-2) var(--space-2) var(--space-1);
+}
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: #070a1299;
+  backdrop-filter: blur(4px);
+  z-index: var(--z-overlay);
+}
+.dialog-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(820px, 90vw);
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - var(--space-12));
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: 0 30px 100px var(--shadow);
+  z-index: var(--z-dialog);
+  overflow-y: auto;
+}
+.dialog-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.dialog-heading h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 var(--space-2);
+  text-wrap: balance;
+}
+.dialog-heading p {
+  color: var(--muted);
+  font-size: var(--text-sm, 12px);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.dialog-content textarea {
+  resize: vertical;
+  min-height: 140px;
+  height: min(380px, 38vh);
+  width: 100%;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  color: var(--text);
+  font-family: Consolas, monospace;
+  font-size: var(--text-sm, 12px);
+  line-height: 1.65;
+  tab-size: 2;
+}
+.dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  font-size: 10px;
+}
+.dialog-footer button {
+  font-size: var(--text-sm, 12px);
+}
+.export-instructions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: 0 0 var(--space-4);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.export-instructions .badge {
+  white-space: nowrap;
+}
+.validation {
+  color: var(--accent);
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin-top: var(--space-3);
+}
+.color-trigger {
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  width: 100%;
+  justify-content: flex-start;
+  padding: 0 var(--space-2);
+  height: var(--control-h);
+  gap: var(--space-2);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+/* A colour swatch must be square, or it reads as misaligned. */
+.swatch {
+  display: block;
+  width: var(--space-6);
+  height: var(--space-6);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px #8885;
+  flex-shrink: 0;
+}
+.color-trigger code {
+  font-size: 11px;
+}
+.color-trigger > svg {
+  margin-left: auto;
+}
+.field-grid .color-trigger {
+  gap: var(--space-1);
+  padding: 0 var(--space-1);
+}
+.field-grid .color-trigger code {
+  font-size: 9px;
+}
+.field-grid .color-trigger > svg {
+  display: none;
+}
+.field-grid .color-trigger .swatch {
+  width: 20px;
+  height: 20px;
+}
+.color-popover {
+  width: 272px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  padding: var(--space-4);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 16px 45px var(--shadow);
+  z-index: var(--z-popover);
+  max-height: var(--radix-popover-content-available-height);
+  overflow: auto;
+}
+.popover-title {
+  font-size: var(--text-sm, 12px);
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.popover-title .muted {
+  font-weight: 400;
+  font-size: 11px;
+}
+.color-plane {
+  width: 100%;
+  height: 160px;
+  border-radius: var(--radius-sm);
+  position: relative;
+  background-image:
+    linear-gradient(to top, #000, transparent),
+    linear-gradient(to right, #fff, transparent);
+  touch-action: none;
+  cursor: crosshair;
+}
+.color-cursor {
+  position: absolute;
+  width: var(--space-3);
+  height: var(--space-3);
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px #0009;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.hue-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+  font-size: 10px;
+  color: var(--muted);
+}
+.hue-slider {
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(to right, red, #ff0, #0f0, #0ff, #00f, #f0f, red);
+  cursor: pointer;
+}
+.hue-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  background: #fff;
+  border: 2px solid #47526d;
+  border-radius: 50%;
+}
+.color-preview {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1);
+}
+.color-preview .field {
+  margin: 0 0 0 var(--space-2);
+  flex: 1;
+}
+.color-preview .swatch {
+  width: var(--space-8);
+  height: var(--space-8);
+}
+.color-preview input {
+  font-family: Consolas, monospace;
+  font-size: var(--text-sm, 12px);
+}
+.color-presets {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-4) 0;
+}
+.color-presets button {
+  height: var(--space-6);
+  width: var(--space-6);
+  padding: 0;
+  border: 1px solid #8885;
+  border-radius: var(--radius-sm);
+}
+.color-actions {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-3);
+}
+.color-actions button {
+  font-size: 11px;
+}
+.color-error {
+  font-size: 11px;
+  color: var(--danger);
+  margin-top: var(--space-2);
+}
+.popover-arrow {
+  fill: var(--surface);
+}
+/* Data-sources dialog: a list of sources on the left, the selected source's
+   editor on the right. Names are plain text in list rows, so nothing looks
+   like an editable field that is not one. */
+.source-layout {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
+  min-height: 0;
+}
+.source-rail {
+  width: 208px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--input);
+  overflow: hidden;
+}
+.source-rail-title {
+  margin: 0;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.source-items {
+  flex: 1;
+  min-height: 72px;
+  overflow-y: auto;
+  padding: var(--space-1);
+}
+.source-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  color: var(--muted);
+  font-size: var(--text-sm, 12px);
+}
+.source-item:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.source-item.active {
+  background: var(--row-active);
+  color: var(--row-active-text);
+  font-weight: 600;
+}
+.source-item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.source-item-meta {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--faint);
+}
+.source-item.active .source-item-meta {
+  color: var(--muted);
+}
+.source-rail-add {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border-top: 1px solid var(--border);
+}
+.source-rail-add button {
+  justify-content: flex-start;
+  height: 28px;
+  padding: 0 var(--space-2);
+  font-size: 11px;
+}
+.source-editor {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.source-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+.source-head-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.source-head-hint {
+  margin: 0 0 var(--space-3);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.source-editor .dialog-footer {
+  margin-top: auto;
+  padding-top: var(--space-3);
+}
+
+.dialog-tabs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+.dialog-tabs .badge {
+  margin-left: var(--space-2);
+}
+.dialog-scroll {
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: var(--space-1);
+}
+.dialog-content textarea.small {
+  min-height: 90px;
+  height: min(200px, 24vh);
+}
+.preview-note {
+  font-size: 11px;
+  margin-bottom: var(--space-2);
+}
+/* A condition is a self-contained card: identity + colour on one row, the
+   test itself on the next. The old single-row grid broke as soon as "between"
+   added a third field, which pushed the remove button into an implicit cell. */
+.rule-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--input);
+  padding: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+.rule-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.rule-card-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* Only the swatch, not a full-width picker, on the card header. */
+.rule-card-head .field {
+  flex: 0 0 auto;
+  margin: 0;
+}
+.rule-card-head .field > span {
+  display: none;
+}
+.rule-card-head .color-trigger {
+  width: 32px;
+  min-width: 32px;
+  height: var(--control-h);
+  padding: 0;
+  justify-content: center;
+}
+.rule-card-head .color-trigger code,
+.rule-card-head .color-trigger > svg {
+  display: none;
+}
+.rule-card-head .color-trigger .swatch {
+  width: 18px;
+  height: 18px;
+}
+.rule-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+.rule-card-body .field {
+  flex: 1 1 96px;
+  margin-bottom: 0;
+}
+/* Concentric: 6px outer - 8px padding means the nested controls read square. */
+.pick-editor {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-2) 0;
+  margin-bottom: var(--space-3);
+}
+.pick-editor .field input,
+.pick-editor .field select {
+  border-radius: var(--radius-sm);
+}

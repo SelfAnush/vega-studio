@@ -1,0 +1,843 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Service load panel — inline sample data",
+  "width": 1000,
+  "height": 600,
+  "padding": 0,
+  "autosize": "none",
+  "background": "#171c27",
+  "data": [
+    {
+      "name": "source",
+      "values": [
+        {
+          "service": "ingest",
+          "load": 42.5,
+          "label": "ingest"
+        },
+        {
+          "service": "events",
+          "load": 78.2,
+          "label": "events"
+        },
+        {
+          "service": "archive",
+          "load": 91.7,
+          "label": "archive"
+        },
+        {
+          "service": "search",
+          "load": 63.9,
+          "label": "search"
+        },
+        {
+          "service": "alerts",
+          "load": 28.4,
+          "label": "alerts"
+        }
+      ]
+    },
+    {
+      "name": "data_load",
+      "source": "source",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "true"
+        },
+        {
+          "type": "collect",
+          "sort": {
+            "field": "load",
+            "order": "descending"
+          }
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 24
+          },
+          "y": {
+            "value": 20
+          },
+          "width": {
+            "value": 952
+          },
+          "height": {
+            "value": 84
+          },
+          "fill": {
+            "value": "#232b3d"
+          },
+          "stroke": {
+            "value": "transparent"
+          },
+          "strokeWidth": {
+            "value": 2
+          },
+          "opacity": {
+            "value": 1
+          },
+          "cornerRadius": {
+            "value": 12
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 48
+          },
+          "y": {
+            "value": 34
+          },
+          "text": {
+            "value": "Service load overview"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 29
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 24
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#e6e9f0"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 700
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 48
+          },
+          "y": {
+            "value": 68
+          },
+          "text": {
+            "value": "Fixed-size panel · shapes, text, and a configured chart"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 16
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 13
+          },
+          "fontWeight": {
+            "value": "normal"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#929db2"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 700
+          }
+        }
+      }
+    },
+    {
+      "type": "path",
+      "encode": {
+        "update": {
+          "path": {
+            "value": "M 904 62 a 22 22 0 1 0 44 0 a 22 22 0 1 0 -44 0"
+          },
+          "fill": {
+            "value": "#67b9a0"
+          },
+          "stroke": {
+            "value": "transparent"
+          },
+          "strokeWidth": {
+            "value": 2
+          },
+          "opacity": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "type": "rule",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 24
+          },
+          "y": {
+            "value": 120
+          },
+          "x2": {
+            "value": 976
+          },
+          "y2": {
+            "value": 120
+          },
+          "stroke": {
+            "value": "#303747"
+          },
+          "strokeWidth": {
+            "value": 1
+          },
+          "strokeCap": {
+            "value": "butt"
+          },
+          "strokeOpacity": {
+            "value": 1
+          }
+        }
+      }
+    },
+    {
+      "type": "group",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 24
+          },
+          "y": {
+            "value": 140
+          },
+          "width": {
+            "value": 952
+          },
+          "height": {
+            "value": 420
+          }
+        }
+      },
+      "scales": [
+        {
+          "name": "x",
+          "type": "linear",
+          "domain": [
+            0,
+            100
+          ],
+          "range": [
+            0,
+            732
+          ],
+          "zero": true,
+          "clamp": true
+        },
+        {
+          "name": "y",
+          "type": "band",
+          "domain": {
+            "data": "data_load",
+            "field": "label"
+          },
+          "range": [
+            0,
+            344
+          ],
+          "padding": 0.38
+        }
+      ],
+      "marks": [
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 344
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 363
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 344
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 546
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 344
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 729
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 344
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 912
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 344
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "value": 362
+              },
+              "text": {
+                "value": "0.0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 363
+              },
+              "y": {
+                "value": 362
+              },
+              "text": {
+                "value": "25.0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 546
+              },
+              "y": {
+                "value": 362
+              },
+              "text": {
+                "value": "50.0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 729
+              },
+              "y": {
+                "value": 362
+              },
+              "text": {
+                "value": "75.0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 912
+              },
+              "y": {
+                "value": 362
+              },
+              "text": {
+                "value": "100.0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 546
+              },
+              "y": {
+                "value": 379
+              },
+              "text": {
+                "value": "load %"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "align": {
+                "value": "center"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_load"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "scale": "y",
+                "field": "label"
+              },
+              "height": {
+                "scale": "y",
+                "band": 1
+              },
+              "width": {
+                "value": 732
+              },
+              "fill": {
+                "value": "#242c3c"
+              },
+              "cornerRadius": {
+                "value": 4
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_load"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "scale": "y",
+                "field": "label"
+              },
+              "height": {
+                "scale": "y",
+                "band": 1
+              },
+              "width": {
+                "signal": "scale('x', datum[\"load\"])"
+              },
+              "fill": {
+                "signal": "datum[\"load\"] >= 90 ? '#ee7686' : datum[\"load\"] >= 70 ? '#e8b65c' : '#6c7df0'"
+              },
+              "cornerRadius": {
+                "value": 4
+              },
+              "tooltip": {
+                "signal": "datum[\"label\"] + ': ' + format(datum[\"load\"], '.1f')+'%'"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_load"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 0
+              },
+              "y": {
+                "scale": "y",
+                "field": "label",
+                "band": 0.5
+              },
+              "text": {
+                "signal": "datum[\"label\"]"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "limit": {
+                "value": 170
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_load"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 952
+              },
+              "y": {
+                "scale": "y",
+                "field": "label",
+                "band": 0.5
+              },
+              "text": {
+                "signal": "format(datum[\"load\"], '.1f')+'%'"
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 13
+              },
+              "y": {
+                "value": 396
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#6c7df0"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 26
+              },
+              "y": {
+                "value": 396
+              },
+              "text": {
+                "value": "Healthy < 70.0%"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 140.5
+              },
+              "y": {
+                "value": 396
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#e8b65c"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 153.5
+              },
+              "y": {
+                "value": 396
+              },
+              "text": {
+                "value": "Warning 70.0%–<90.0%"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 300.5
+              },
+              "y": {
+                "value": 396
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#ee7686"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 313.5
+              },
+              "y": {
+                "value": 396
+              },
+              "text": {
+                "value": "Critical ≥ 90.0%"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

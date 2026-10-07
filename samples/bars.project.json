@@ -1,0 +1,209 @@
+{
+  "version": 4,
+  "name": "Horizontal and vertical bars",
+  "canvas": {
+    "width": 1000,
+    "height": 720,
+    "background": "#171c27"
+  },
+  "sources": [
+    {
+      "kind": "inline",
+      "name": "source",
+      "rows": [
+        {
+          "endpoint": "GET /search",
+          "requests": 1240,
+          "errors": 18
+        },
+        {
+          "endpoint": "POST /events",
+          "requests": 860,
+          "errors": 42
+        },
+        {
+          "endpoint": "GET /assets",
+          "requests": 1530,
+          "errors": 7
+        },
+        {
+          "endpoint": "POST /ingest",
+          "requests": 640,
+          "errors": 55
+        },
+        {
+          "endpoint": "GET /status",
+          "requests": 2100,
+          "errors": 3
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": "title",
+      "name": "Panel title",
+      "x": 40,
+      "y": 28,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 920,
+      "height": 40,
+      "type": "text",
+      "content": "Traffic and errors share one source",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 26,
+      "weight": "bold",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#e6e9f0"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "requests",
+      "name": "Requests",
+      "x": 40,
+      "y": 84,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 920,
+      "height": 290,
+      "type": "bar",
+      "orientation": "horizontal",
+      "dataset": "source",
+      "category": {
+        "kind": "field",
+        "field": "endpoint"
+      },
+      "value": {
+        "kind": "field",
+        "field": "requests"
+      },
+      "sort": "value-desc",
+      "colorMode": "single",
+      "color": {
+        "kind": "fixed",
+        "value": "#6c7df0"
+      },
+      "labels": true,
+      "labelPosition": "outside",
+      "valueFormat": "number",
+      "decimals": 0,
+      "tooltip": true,
+      "axisMax": 2500,
+      "showValueAxis": true,
+      "showCategoryAxis": true,
+      "valueTitle": "requests",
+      "categoryTitle": "",
+      "labelFontSize": 12,
+      "labelColor": "",
+      "showGrid": true,
+      "gridColor": "",
+      "gridWidth": 1,
+      "tickCount": 5,
+      "bandPadding": 0.38,
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "warning": 65,
+      "critical": 85,
+      "warningColor": {
+        "kind": "fixed",
+        "value": "#e8b65c"
+      },
+      "criticalColor": {
+        "kind": "fixed",
+        "value": "#ee7686"
+      },
+      "showLegend": true
+    },
+    {
+      "id": "errors",
+      "name": "Errors",
+      "x": 40,
+      "y": 394,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 920,
+      "height": 290,
+      "type": "bar",
+      "orientation": "vertical",
+      "dataset": "source",
+      "category": {
+        "kind": "field",
+        "field": "endpoint"
+      },
+      "value": {
+        "kind": "field",
+        "field": "errors"
+      },
+      "sort": "category-asc",
+      "colorMode": "threshold",
+      "color": {
+        "kind": "fixed",
+        "value": "#6c7df0"
+      },
+      "labels": true,
+      "labelPosition": "outside",
+      "valueFormat": "number",
+      "decimals": 0,
+      "tooltip": true,
+      "axisMax": 60,
+      "showValueAxis": true,
+      "showCategoryAxis": true,
+      "valueTitle": "errors",
+      "categoryTitle": "",
+      "labelFontSize": 12,
+      "labelColor": "",
+      "showGrid": true,
+      "gridColor": "",
+      "gridWidth": 1,
+      "tickCount": 5,
+      "bandPadding": 0.38,
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "warning": 20,
+      "critical": 40,
+      "warningColor": {
+        "kind": "fixed",
+        "value": "#e8b65c"
+      },
+      "criticalColor": {
+        "kind": "fixed",
+        "value": "#ee7686"
+      },
+      "showLegend": true
+    }
+  ]
+}

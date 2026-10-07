@@ -1,0 +1,1220 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Horizontal and vertical bars — inline sample data",
+  "width": 1000,
+  "height": 720,
+  "padding": 0,
+  "autosize": "none",
+  "background": "#171c27",
+  "data": [
+    {
+      "name": "source",
+      "values": [
+        {
+          "endpoint": "GET /search",
+          "requests": 1240,
+          "errors": 18
+        },
+        {
+          "endpoint": "POST /events",
+          "requests": 860,
+          "errors": 42
+        },
+        {
+          "endpoint": "GET /assets",
+          "requests": 1530,
+          "errors": 7
+        },
+        {
+          "endpoint": "POST /ingest",
+          "requests": 640,
+          "errors": 55
+        },
+        {
+          "endpoint": "GET /status",
+          "requests": 2100,
+          "errors": 3
+        }
+      ]
+    },
+    {
+      "name": "data_requests",
+      "source": "source",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "true"
+        },
+        {
+          "type": "collect",
+          "sort": {
+            "field": "requests",
+            "order": "descending"
+          }
+        }
+      ]
+    },
+    {
+      "name": "data_errors",
+      "source": "source",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "true"
+        },
+        {
+          "type": "collect",
+          "sort": {
+            "field": "endpoint",
+            "order": "ascending"
+          }
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 28
+          },
+          "text": {
+            "value": "Traffic and errors share one source"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 31
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 26
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#e6e9f0"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 920
+          }
+        }
+      }
+    },
+    {
+      "type": "group",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 84
+          },
+          "width": {
+            "value": 920
+          },
+          "height": {
+            "value": 290
+          }
+        }
+      },
+      "scales": [
+        {
+          "name": "x",
+          "type": "linear",
+          "domain": [
+            0,
+            2500
+          ],
+          "range": [
+            0,
+            700
+          ],
+          "zero": true,
+          "clamp": true
+        },
+        {
+          "name": "y",
+          "type": "band",
+          "domain": {
+            "data": "data_requests",
+            "field": "endpoint"
+          },
+          "range": [
+            0,
+            238
+          ],
+          "padding": 0.38
+        }
+      ],
+      "marks": [
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 238
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 355
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 238
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 530
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 238
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 705
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 238
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 880
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 238
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "value": 256
+              },
+              "text": {
+                "value": "0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 355
+              },
+              "y": {
+                "value": 256
+              },
+              "text": {
+                "value": "625"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 530
+              },
+              "y": {
+                "value": 256
+              },
+              "text": {
+                "value": "1250"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 705
+              },
+              "y": {
+                "value": 256
+              },
+              "text": {
+                "value": "1875"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 880
+              },
+              "y": {
+                "value": 256
+              },
+              "text": {
+                "value": "2500"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 530
+              },
+              "y": {
+                "value": 273
+              },
+              "text": {
+                "value": "requests"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "align": {
+                "value": "center"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_requests"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "scale": "y",
+                "field": "endpoint"
+              },
+              "height": {
+                "scale": "y",
+                "band": 1
+              },
+              "width": {
+                "value": 700
+              },
+              "fill": {
+                "value": "#242c3c"
+              },
+              "cornerRadius": {
+                "value": 4
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_requests"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "scale": "y",
+                "field": "endpoint"
+              },
+              "height": {
+                "scale": "y",
+                "band": 1
+              },
+              "width": {
+                "signal": "scale('x', datum[\"requests\"])"
+              },
+              "fill": {
+                "value": "#6c7df0"
+              },
+              "cornerRadius": {
+                "value": 4
+              },
+              "tooltip": {
+                "signal": "datum[\"endpoint\"] + ': ' + format(datum[\"requests\"], '.0f')"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_requests"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 0
+              },
+              "y": {
+                "scale": "y",
+                "field": "endpoint",
+                "band": 0.5
+              },
+              "text": {
+                "signal": "datum[\"endpoint\"]"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "limit": {
+                "value": 170
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_requests"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 920
+              },
+              "y": {
+                "scale": "y",
+                "field": "endpoint",
+                "band": 0.5
+              },
+              "text": {
+                "signal": "format(datum[\"requests\"], '.0f')"
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "group",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 394
+          },
+          "width": {
+            "value": 920
+          },
+          "height": {
+            "value": 290
+          }
+        }
+      },
+      "scales": [
+        {
+          "name": "x",
+          "type": "band",
+          "domain": {
+            "data": "data_errors",
+            "field": "endpoint"
+          },
+          "range": [
+            0,
+            846
+          ],
+          "padding": 0.38
+        },
+        {
+          "name": "y",
+          "type": "linear",
+          "domain": [
+            0,
+            60
+          ],
+          "range": [
+            212,
+            0
+          ],
+          "zero": true,
+          "clamp": true
+        }
+      ],
+      "marks": [
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 66
+              },
+              "x2": {
+                "value": 912
+              },
+              "y": {
+                "value": 236
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 66
+              },
+              "x2": {
+                "value": 912
+              },
+              "y": {
+                "value": 183
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 66
+              },
+              "x2": {
+                "value": 912
+              },
+              "y": {
+                "value": 130
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 66
+              },
+              "x2": {
+                "value": 912
+              },
+              "y": {
+                "value": 77
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 66
+              },
+              "x2": {
+                "value": 912
+              },
+              "y": {
+                "value": 24
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 60
+              },
+              "y": {
+                "value": 236
+              },
+              "text": {
+                "value": "0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 60
+              },
+              "y": {
+                "value": 183
+              },
+              "text": {
+                "value": "15"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 60
+              },
+              "y": {
+                "value": 130
+              },
+              "text": {
+                "value": "30"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 60
+              },
+              "y": {
+                "value": 77
+              },
+              "text": {
+                "value": "45"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 60
+              },
+              "y": {
+                "value": 24
+              },
+              "text": {
+                "value": "60"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 12
+              },
+              "y": {
+                "value": 130
+              },
+              "text": {
+                "value": "errors"
+              },
+              "angle": {
+                "value": -90
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "align": {
+                "value": "center"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_errors"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "endpoint"
+              },
+              "y": {
+                "value": 24
+              },
+              "width": {
+                "scale": "x",
+                "band": 1
+              },
+              "height": {
+                "value": 212
+              },
+              "fill": {
+                "value": "#242c3c"
+              },
+              "cornerRadius": {
+                "value": 4
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_errors"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "endpoint"
+              },
+              "y": {
+                "signal": "24 + scale('y', datum[\"errors\"])"
+              },
+              "y2": {
+                "value": 236
+              },
+              "width": {
+                "scale": "x",
+                "band": 1
+              },
+              "fill": {
+                "signal": "datum[\"errors\"] >= 40 ? '#ee7686' : datum[\"errors\"] >= 20 ? '#e8b65c' : '#6c7df0'"
+              },
+              "cornerRadius": {
+                "value": 4
+              },
+              "tooltip": {
+                "signal": "datum[\"endpoint\"] + ': ' + format(datum[\"errors\"], '.0f')"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_errors"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "endpoint",
+                "band": 0.5
+              },
+              "y": {
+                "value": 250
+              },
+              "text": {
+                "signal": "datum[\"endpoint\"]"
+              },
+              "align": {
+                "value": "center"
+              },
+              "baseline": {
+                "value": "top"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "limit": {
+                "value": 169
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_errors"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "endpoint",
+                "band": 0.5
+              },
+              "y": {
+                "signal": "24 + scale('y', datum[\"errors\"]) - 4"
+              },
+              "text": {
+                "signal": "format(datum[\"errors\"], '.0f')"
+              },
+              "align": {
+                "value": "center"
+              },
+              "baseline": {
+                "value": "bottom"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 13
+              },
+              "y": {
+                "value": 266
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#6c7df0"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 26
+              },
+              "y": {
+                "value": 266
+              },
+              "text": {
+                "value": "Healthy < 20"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 121
+              },
+              "y": {
+                "value": 266
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#e8b65c"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 134
+              },
+              "y": {
+                "value": 266
+              },
+              "text": {
+                "value": "Warning 20–<40"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 242
+              },
+              "y": {
+                "value": 266
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#ee7686"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 255
+              },
+              "y": {
+                "value": 266
+              },
+              "text": {
+                "value": "Critical ≥ 40"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

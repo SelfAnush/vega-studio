@@ -1,0 +1,726 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Logstash queue usage — inline sample data",
+  "width": 900,
+  "height": 560,
+  "padding": 0,
+  "autosize": "none",
+  "background": "#171c27",
+  "data": [
+    {
+      "name": "source",
+      "values": [
+        {
+          "host": "edge-01",
+          "pipeline": "ingest",
+          "usage_pct": 32,
+          "label": "edge-01 / ingest"
+        },
+        {
+          "host": "edge-02",
+          "pipeline": "ingest",
+          "usage_pct": 48,
+          "label": "edge-02 / ingest"
+        },
+        {
+          "host": "core-01",
+          "pipeline": "events",
+          "usage_pct": 72,
+          "label": "core-01 / events"
+        },
+        {
+          "host": "core-02",
+          "pipeline": "events",
+          "usage_pct": 91,
+          "label": "core-02 / events"
+        },
+        {
+          "host": "worker-01",
+          "pipeline": "archive",
+          "usage_pct": 58,
+          "label": "worker-01 / archive"
+        }
+      ]
+    },
+    {
+      "name": "data_queues",
+      "source": "source",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "true"
+        }
+      ]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 32
+          },
+          "text": {
+            "value": "Logstash queue usage"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 34
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 28
+          },
+          "fontWeight": {
+            "value": "bold"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#e6e9f0"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 800
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 80
+          },
+          "text": {
+            "value": "Pipeline capacity across your infrastructure · sample snapshot"
+          },
+          "lineBreak": {
+            "value": "\n"
+          },
+          "lineHeight": {
+            "value": 17
+          },
+          "font": {
+            "value": "Inter, Segoe UI, sans-serif"
+          },
+          "fontSize": {
+            "value": 14
+          },
+          "fontWeight": {
+            "value": "normal"
+          },
+          "align": {
+            "value": "left"
+          },
+          "baseline": {
+            "value": "top"
+          },
+          "fill": {
+            "value": "#929db2"
+          },
+          "opacity": {
+            "value": 1
+          },
+          "limit": {
+            "value": 820
+          }
+        }
+      }
+    },
+    {
+      "type": "group",
+      "encode": {
+        "update": {
+          "x": {
+            "value": 40
+          },
+          "y": {
+            "value": 142
+          },
+          "width": {
+            "value": 820
+          },
+          "height": {
+            "value": 368
+          }
+        }
+      },
+      "scales": [
+        {
+          "name": "x",
+          "type": "linear",
+          "domain": [
+            0,
+            100
+          ],
+          "range": [
+            0,
+            600
+          ],
+          "zero": true,
+          "clamp": true
+        },
+        {
+          "name": "y",
+          "type": "band",
+          "domain": {
+            "data": "data_queues",
+            "field": "label"
+          },
+          "range": [
+            0,
+            310
+          ],
+          "padding": 0.38
+        }
+      ],
+      "marks": [
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 310
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 330
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 310
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 480
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 310
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 630
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 310
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "rule",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 780
+              },
+              "y": {
+                "value": 0
+              },
+              "y2": {
+                "value": 310
+              },
+              "stroke": {
+                "value": "#303747"
+              },
+              "strokeWidth": {
+                "value": 1
+              },
+              "strokeDash": {
+                "value": [
+                  3,
+                  4
+                ]
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "value": 328
+              },
+              "text": {
+                "value": "0"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 330
+              },
+              "y": {
+                "value": 328
+              },
+              "text": {
+                "value": "25"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 480
+              },
+              "y": {
+                "value": 328
+              },
+              "text": {
+                "value": "50"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 630
+              },
+              "y": {
+                "value": 328
+              },
+              "text": {
+                "value": "75"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 780
+              },
+              "y": {
+                "value": 328
+              },
+              "text": {
+                "value": "100"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "align": {
+                "value": "center"
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_queues"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "scale": "y",
+                "field": "label"
+              },
+              "height": {
+                "scale": "y",
+                "band": 1
+              },
+              "width": {
+                "value": 600
+              },
+              "fill": {
+                "value": "#242c3c"
+              },
+              "cornerRadius": {
+                "value": 4
+              }
+            }
+          }
+        },
+        {
+          "type": "rect",
+          "from": {
+            "data": "data_queues"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 180
+              },
+              "y": {
+                "scale": "y",
+                "field": "label"
+              },
+              "height": {
+                "scale": "y",
+                "band": 1
+              },
+              "width": {
+                "signal": "scale('x', datum[\"usage_pct\"])"
+              },
+              "fill": {
+                "signal": "datum[\"usage_pct\"] >= 85 ? '#ee7686' : datum[\"usage_pct\"] >= 65 ? '#e8b65c' : '#6c7df0'"
+              },
+              "cornerRadius": {
+                "value": 4
+              },
+              "tooltip": {
+                "signal": "datum[\"label\"] + ': ' + format(datum[\"usage_pct\"], '.0f')"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_queues"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 0
+              },
+              "y": {
+                "scale": "y",
+                "field": "label",
+                "band": 0.5
+              },
+              "text": {
+                "signal": "datum[\"label\"]"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              },
+              "limit": {
+                "value": 170
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "from": {
+            "data": "data_queues"
+          },
+          "encode": {
+            "update": {
+              "x": {
+                "value": 820
+              },
+              "y": {
+                "scale": "y",
+                "field": "label",
+                "band": 0.5
+              },
+              "text": {
+                "signal": "format(datum[\"usage_pct\"], '.0f')"
+              },
+              "align": {
+                "value": "right"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 12
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 13
+              },
+              "y": {
+                "value": 344
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#6c7df0"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 26
+              },
+              "y": {
+                "value": 344
+              },
+              "text": {
+                "value": "Healthy < 65"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 121
+              },
+              "y": {
+                "value": 344
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#e8b65c"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 134
+              },
+              "y": {
+                "value": 344
+              },
+              "text": {
+                "value": "Warning 65–<85"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 242
+              },
+              "y": {
+                "value": 344
+              },
+              "size": {
+                "value": 55
+              },
+              "fill": {
+                "value": "#ee7686"
+              }
+            }
+          }
+        },
+        {
+          "type": "text",
+          "encode": {
+            "update": {
+              "x": {
+                "value": 255
+              },
+              "y": {
+                "value": 344
+              },
+              "text": {
+                "value": "Critical ≥ 85"
+              },
+              "baseline": {
+                "value": "middle"
+              },
+              "fill": {
+                "value": "#bbc4d5"
+              },
+              "fontSize": {
+                "value": 11
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

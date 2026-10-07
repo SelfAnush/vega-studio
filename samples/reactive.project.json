@@ -1,0 +1,490 @@
+{
+  "version": 4,
+  "name": "Reactive data panel",
+  "canvas": {
+    "width": 1000,
+    "height": 640,
+    "background": "#171c27"
+  },
+  "sources": [
+    {
+      "kind": "inline",
+      "name": "metrics",
+      "rows": [
+        {
+          "service": "ingest",
+          "load": 42,
+          "status": "ok",
+          "updated": "2026-09-22T08:00:00Z"
+        },
+        {
+          "service": "events",
+          "load": 78,
+          "status": "warn",
+          "updated": "2026-09-22T08:05:00Z"
+        },
+        {
+          "service": "archive",
+          "load": 95,
+          "status": "crit",
+          "updated": "2026-09-22T08:09:00Z"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": "title",
+      "name": "Panel title",
+      "x": 40,
+      "y": 28,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 600,
+      "height": 40,
+      "type": "text",
+      "content": "Worst load right now",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 26,
+      "weight": "bold",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#e6e9f0"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "bigvalue",
+      "name": "Worst load value",
+      "x": 40,
+      "y": 72,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 300,
+      "height": 64,
+      "type": "text",
+      "content": "—",
+      "contentFrom": {
+        "pick": {
+          "dataset": "metrics",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "max",
+          "reduceField": "load",
+          "field": "value"
+        },
+        "format": "percent",
+        "decimals": 0
+      },
+      "colorRules": {
+        "pick": {
+          "dataset": "metrics",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "max",
+          "reduceField": "load",
+          "field": "value"
+        },
+        "rules": [
+          {
+            "operator": ">=",
+            "value": 90,
+            "color": {
+              "kind": "fixed",
+              "value": "#ee7686"
+            }
+          },
+          {
+            "operator": ">=",
+            "value": 70,
+            "color": {
+              "kind": "fixed",
+              "value": "#e8b65c"
+            }
+          }
+        ],
+        "default": "#67b9a0"
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 44,
+      "weight": "bold",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#e6e9f0"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "banner",
+      "name": "Status banner",
+      "x": 360,
+      "y": 72,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 600,
+      "height": 64,
+      "type": "rectangle",
+      "fill": {
+        "kind": "fixed",
+        "value": "#67b9a0"
+      },
+      "fillRules": {
+        "pick": {
+          "dataset": "metrics",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "max",
+          "reduceField": "load",
+          "field": "value"
+        },
+        "rules": [
+          {
+            "operator": ">=",
+            "value": 90,
+            "color": {
+              "kind": "fixed",
+              "value": "#ee7686"
+            }
+          },
+          {
+            "operator": ">=",
+            "value": 70,
+            "color": {
+              "kind": "fixed",
+              "value": "#e8b65c"
+            }
+          }
+        ],
+        "default": "#67b9a0"
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "stroke": {
+        "kind": "none"
+      },
+      "strokeWidth": 2,
+      "strokeDash": "solid",
+      "opacity": 1,
+      "radius": 12
+    },
+    {
+      "id": "dot",
+      "name": "Latest status",
+      "x": 896,
+      "y": 28,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 44,
+      "height": 44,
+      "type": "ellipse",
+      "fill": {
+        "kind": "fixed",
+        "value": "#67b9a0"
+      },
+      "fillRules": {
+        "pick": {
+          "dataset": "metrics",
+          "mode": "latest",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "updated",
+          "op": "sum",
+          "reduceField": "",
+          "field": "status"
+        },
+        "rules": [
+          {
+            "operator": "==",
+            "value": "crit",
+            "color": {
+              "kind": "fixed",
+              "value": "#ee7686"
+            }
+          },
+          {
+            "operator": "==",
+            "value": "warn",
+            "color": {
+              "kind": "fixed",
+              "value": "#e8b65c"
+            }
+          }
+        ],
+        "default": "#67b9a0"
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "stroke": {
+        "kind": "none"
+      },
+      "strokeWidth": 2,
+      "strokeDash": "solid",
+      "opacity": 1,
+      "lockAspect": true
+    },
+    {
+      "id": "rule",
+      "name": "Load rule",
+      "x": 40,
+      "y": 160,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "type": "line",
+      "x2": 920,
+      "y2": 0,
+      "color": {
+        "kind": "fixed",
+        "value": "#6c7df0"
+      },
+      "widthMap": {
+        "pick": {
+          "dataset": "metrics",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "average",
+          "reduceField": "load",
+          "field": "value"
+        },
+        "dataMin": 0,
+        "dataMax": 100,
+        "outMin": 1,
+        "outMax": 8,
+        "fallback": 2
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "strokeWidth": 3,
+      "strokeDash": "solid",
+      "cap": "butt",
+      "opacity": 1
+    },
+    {
+      "id": "alerts",
+      "name": "Alerts",
+      "x": 40,
+      "y": 184,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "type": "group",
+      "visibility": {
+        "mode": "rule",
+        "pick": {
+          "dataset": "metrics",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "max",
+          "reduceField": "load",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 70,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      }
+    },
+    {
+      "id": "alert-text",
+      "name": "Alert text",
+      "x": 0,
+      "y": 0,
+      "visible": true,
+      "locked": false,
+      "parentId": "alerts",
+      "width": 920,
+      "height": 28,
+      "type": "text",
+      "content": "⚠ Load above warning threshold — check events and archive.",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 15,
+      "weight": "bold",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#e8b65c"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "loads",
+      "name": "Loads",
+      "x": 40,
+      "y": 228,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 920,
+      "height": 372,
+      "type": "bar",
+      "orientation": "horizontal",
+      "dataset": "metrics",
+      "category": {
+        "kind": "field",
+        "field": "service"
+      },
+      "value": {
+        "kind": "field",
+        "field": "load"
+      },
+      "sort": "value-desc",
+      "colorMode": "threshold",
+      "color": {
+        "kind": "fixed",
+        "value": "#6c7df0"
+      },
+      "labels": true,
+      "labelPosition": "outside",
+      "valueFormat": "percent",
+      "decimals": 0,
+      "tooltip": true,
+      "axisMax": 100,
+      "showValueAxis": true,
+      "showCategoryAxis": true,
+      "valueTitle": "",
+      "categoryTitle": "",
+      "labelFontSize": 12,
+      "labelColor": "",
+      "showGrid": true,
+      "gridColor": "",
+      "gridWidth": 1,
+      "tickCount": 5,
+      "bandPadding": 0.38,
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "warning": 70,
+      "critical": 90,
+      "warningColor": {
+        "kind": "fixed",
+        "value": "#e8b65c"
+      },
+      "criticalColor": {
+        "kind": "fixed",
+        "value": "#ee7686"
+      },
+      "showLegend": true
+    }
+  ]
+}

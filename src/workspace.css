@@ -1,0 +1,217 @@
+.workspace {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  background-color: var(--workspace);
+  background-image: radial-gradient(var(--dot) 0.7px, transparent 0.7px);
+  background-size: 18px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.guide {
+  position: absolute;
+  pointer-events: none;
+  border-color: var(--accent);
+  border-style: dashed;
+  opacity: 0.4;
+  z-index: var(--z-guide);
+}
+.guide.vertical {
+  top: 0;
+  bottom: 0;
+  border-left-width: 1px;
+}
+.guide.horizontal {
+  left: 0;
+  right: 0;
+  border-top-width: 1px;
+}
+.canvas-heading {
+  height: var(--subbar-h);
+  flex-shrink: 0;
+  padding: 0 var(--space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  color: var(--faint);
+  z-index: var(--z-grid);
+  background: var(--workspace);
+}
+.canvas-heading button {
+  height: 24px;
+  padding: 0 var(--space-1);
+  font-size: 11px;
+}
+.canvas-heading .muted {
+  margin-left: var(--space-2);
+}
+.canvas-stage {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  overflow: hidden;
+}
+.canvas-stage.panning {
+  cursor: grab;
+}
+.panel-shell {
+  position: relative;
+  flex-shrink: 0;
+  box-shadow:
+    0 18px 65px var(--shadow),
+    0 0 0 1px var(--border);
+  transform-origin: center;
+}
+.vega-render {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.vega-render svg {
+  display: block;
+}
+.overlays {
+  position: absolute;
+  inset: 0;
+}
+.element-overlay {
+  position: absolute;
+  cursor: move;
+  border: 1.5px solid transparent;
+  touch-action: none;
+}
+.element-overlay:hover {
+  border-color: var(--accent);
+}
+.element-overlay.selected {
+  border-color: var(--accent);
+}
+.element-overlay.locked {
+  cursor: default;
+}
+.group-overlay.selected {
+  border-style: dashed;
+}
+.selection-tag {
+  position: absolute;
+  top: -24px;
+  left: -1px;
+  background: var(--primary);
+  color: var(--primary-text);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+}
+/* Elements near the top edge would have the tag clipped, so it moves below. */
+.selection-tag.tag-below {
+  top: auto;
+  bottom: -24px;
+}
+.resize-handle {
+  position: absolute;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  border-radius: 2px;
+  touch-action: none;
+}
+.rh-nw { cursor: nwse-resize; }
+.rh-ne { cursor: nesw-resize; }
+.rh-sw { cursor: nesw-resize; }
+.rh-se { cursor: nwse-resize; }
+.rh-n { cursor: ns-resize; }
+.rh-s { cursor: ns-resize; }
+.rh-e { cursor: ew-resize; }
+.rh-w { cursor: ew-resize; }
+.canvas-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.placement-ghost {
+  position: absolute;
+  pointer-events: none;
+  border: 1.5px dashed var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  z-index: var(--z-ghost);
+}
+.endpoint-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  border-radius: 50%;
+  cursor: crosshair;
+}
+.canvas-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 56px;
+  padding: var(--space-3) var(--space-5);
+  color: var(--muted);
+  font-size: 10px;
+  z-index: var(--z-grid);
+}
+/* Concentric radius: clip the button strip to the container's own curve. */
+.zoom-control {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.zoom-control button {
+  height: var(--control-h);
+  padding: 0 var(--space-2);
+  border-radius: 0;
+}
+.zoom-control span {
+  min-width: var(--space-10);
+  text-align: center;
+}
+.chart-setup {
+  height: 100%;
+  background: var(--raised);
+  border: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--space-3);
+  color: var(--text);
+  pointer-events: none;
+  padding: var(--space-6);
+  text-align: center;
+}
+.chart-setup > svg {
+  color: var(--accent);
+}
+.chart-setup > span {
+  font-size: var(--text-sm, 12px);
+  color: var(--muted);
+  max-width: 296px;
+  text-wrap: pretty;
+}
+@media (max-width: 1200px) {
+  .canvas-bottom > span {
+    max-width: 165px;
+    line-height: 1.6;
+  }
+}

@@ -1,0 +1,330 @@
+/* Inspector-only styling: dialogs and the canvas retain their own density. */
+.properties {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  container-type: inline-size;
+  --control-h: 34px;
+}
+.properties .sidebar-title {
+  position: static;
+  flex: 0 0 var(--subbar-h);
+  padding: 0 16px;
+}
+.inspector-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inspector-title > svg {
+  color: var(--muted);
+}
+.properties .property-intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+.selection-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  border-radius: 10px;
+}
+.selection-description {
+  min-width: 0;
+  flex: 1;
+}
+.properties .property-intro h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+.properties .property-intro p {
+  margin: 2px 0 0;
+  font-size: 11px;
+}
+.inspector-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+.inspector-fields {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.properties .inspector-section {
+  padding: 0;
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+}
+.properties .inspector-section > summary {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 0;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+}
+.properties .inspector-section > summary::before {
+  display: none;
+}
+.properties .inspector-section > summary > svg:first-child {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.properties .inspector-section > summary > span {
+  flex: 1;
+}
+.properties .inspector-section > summary:hover {
+  background: var(--raised);
+}
+.properties .inspector-section > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -3px;
+}
+.section-chevron {
+  color: var(--faint);
+  transform: rotate(-90deg);
+  transition: transform 120ms ease;
+}
+.inspector-section[open] > summary .section-chevron {
+  transform: rotate(0);
+}
+.inspector-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 16px 16px;
+}
+.properties .field {
+  margin: 0;
+  gap: 6px;
+}
+.properties .field > span {
+  font-size: 11px;
+  line-height: 1.4;
+}
+.properties .field input,
+.properties .field select,
+.properties .field textarea {
+  font-size: 12px;
+  border-radius: 6px;
+}
+.properties .field select {
+  appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23aeb8cc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 14px;
+  text-overflow: ellipsis;
+}
+:root[data-theme="light"] .properties .field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23536076' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+@media (forced-colors: active) {
+  .properties .field select {
+    appearance: auto;
+    background-image: none !important;
+  }
+}
+.properties .field textarea {
+  min-height: 88px;
+  line-height: 1.6;
+}
+.properties .field-stack,
+.properties .paint-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+.properties .field input:hover,
+.properties .field select:hover,
+.properties .field textarea:hover {
+  border-color: var(--faint);
+}
+.properties .color-trigger {
+  min-width: 0;
+  height: var(--control-h);
+  padding: 0 8px;
+}
+.properties .color-trigger code {
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.properties .color-trigger .swatch {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+}
+.properties .color-trigger > svg {
+  flex-shrink: 0;
+  width: 12px;
+}
+.properties .alignment {
+  display: flex;
+  background: var(--input);
+}
+.properties .alignment button {
+  border: 0;
+  min-width: 0;
+}
+.properties .alignment button:nth-child(4) {
+  border-left: 1px solid var(--border);
+}
+.properties .check-field {
+  margin: 0;
+  min-height: 34px;
+  gap: 8px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.properties .check-field input {
+  width: 15px;
+  height: 15px;
+}
+.properties .section-help {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.properties .notice {
+  margin: 0;
+  padding: 10px;
+  background: var(--raised);
+  border-radius: 6px;
+}
+.properties .pick-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 12px;
+  background: color-mix(in srgb, var(--raised) 40%, var(--surface));
+  border-radius: 8px;
+}
+.properties .binding-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.properties .binding-group + .binding-group {
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.properties .data-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.properties .data-editor > .flex {
+  flex-direction: column;
+  align-items: stretch;
+}
+.properties .rule-card {
+  margin: 0;
+  min-width: 0;
+}
+.properties .rule-card-body {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 12px;
+}
+.properties .rule-card-body .field {
+  flex: none;
+  width: 100%;
+}
+.properties .rule-card-head .color-trigger {
+  height: 28px;
+}
+.properties .rule-card-head .field > span {
+  display: none;
+}
+.properties .rule-card-head .swatch {
+  width: 16px;
+  height: 16px;
+  flex-basis: 16px;
+}
+.distribute-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.properties .distribute-actions button {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: var(--input);
+}
+.inspector-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+.inspector-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  background: var(--input);
+}
+.inspector-actions button:hover:not(:disabled) {
+  background: var(--hover);
+}
+.inspector-actions .inspector-delete:hover:not(:disabled) {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+.inspector-hint {
+  padding: 12px 16px;
+  color: var(--muted);
+  font-size: 11px;
+  border-top: 1px solid var(--border);
+}
+.inspector-lock-note {
+  margin: 0;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  border-bottom: 1px solid var(--border);
+}
+.inspector-lock-note > svg {
+  flex-shrink: 0;
+}
+@container (max-width: 275px) {
+  .properties .inspector-section-body {
+    padding-inline: 12px;
+  }
+}

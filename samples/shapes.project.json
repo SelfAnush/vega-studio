@@ -1,0 +1,259 @@
+{
+  "version": 4,
+  "name": "Shapes and text",
+  "canvas": {
+    "width": 900,
+    "height": 560,
+    "background": "#ffffff"
+  },
+  "sources": [
+    {
+      "kind": "inline",
+      "name": "source",
+      "rows": []
+    }
+  ],
+  "elements": [
+    {
+      "id": "title",
+      "name": "Panel title",
+      "x": 40,
+      "y": 32,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 820,
+      "height": 40,
+      "type": "text",
+      "content": "Shapes, lines, and styled text",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 28,
+      "weight": "bold",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#202b40"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "subtitle",
+      "name": "Subtitle",
+      "x": 40,
+      "y": 80,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 820,
+      "height": 64,
+      "type": "text",
+      "content": "Centered multiline text\nSecond line stays centered",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "georgia",
+      "fontSize": 16,
+      "weight": "normal",
+      "align": "center",
+      "vertical": "middle",
+      "lineHeight": 1.4,
+      "color": {
+        "kind": "fixed",
+        "value": "#43516b"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "card",
+      "name": "Card",
+      "x": 40,
+      "y": 168,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 300,
+      "height": 150,
+      "type": "rectangle",
+      "fill": {
+        "kind": "fixed",
+        "value": "#5965dd"
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "stroke": {
+        "kind": "fixed",
+        "value": "#202b40"
+      },
+      "strokeWidth": 3,
+      "strokeDash": "dashed",
+      "opacity": 1,
+      "radius": 16
+    },
+    {
+      "id": "badge",
+      "name": "Badge",
+      "x": 380,
+      "y": 168,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 150,
+      "height": 150,
+      "type": "ellipse",
+      "fill": {
+        "kind": "none"
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "stroke": {
+        "kind": "fixed",
+        "value": "#ee7686"
+      },
+      "strokeWidth": 4,
+      "strokeDash": "solid",
+      "opacity": 1,
+      "lockAspect": true
+    },
+    {
+      "id": "connector",
+      "name": "Connector",
+      "x": 570,
+      "y": 168,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "type": "line",
+      "x2": 250,
+      "y2": 150,
+      "color": {
+        "kind": "fixed",
+        "value": "#67b9a0"
+      },
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "strokeWidth": 4,
+      "strokeDash": "dashed",
+      "cap": "round",
+      "opacity": 1
+    },
+    {
+      "id": "caption",
+      "name": "Caption",
+      "x": 40,
+      "y": 360,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 820,
+      "height": 120,
+      "type": "text",
+      "content": "Dashed card, outlined circle, and a round-capped connector.\nEverything here exports to plain Vega marks.",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 14,
+      "weight": "normal",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.5,
+      "color": {
+        "kind": "fixed",
+        "value": "#43516b"
+      },
+      "opacity": 1
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "version": 4,
+  "name": "Logstash queue usage",
+  "canvas": {
+    "width": 900,
+    "height": 560,
+    "background": "#171c27"
+  },
+  "sources": [
+    {
+      "kind": "inline",
+      "name": "source",
+      "rows": [
+        {
+          "host": "edge-01",
+          "pipeline": "ingest",
+          "usage_pct": 32,
+          "label": "edge-01 / ingest"
+        },
+        {
+          "host": "edge-02",
+          "pipeline": "ingest",
+          "usage_pct": 48,
+          "label": "edge-02 / ingest"
+        },
+        {
+          "host": "core-01",
+          "pipeline": "events",
+          "usage_pct": 72,
+          "label": "core-01 / events"
+        },
+        {
+          "host": "core-02",
+          "pipeline": "events",
+          "usage_pct": 91,
+          "label": "core-02 / events"
+        },
+        {
+          "host": "worker-01",
+          "pipeline": "archive",
+          "usage_pct": 58,
+          "label": "worker-01 / archive"
+        }
+      ]
+    }
+  ],
+  "elements": [
+    {
+      "id": "title",
+      "name": "Panel title",
+      "x": 40,
+      "y": 32,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 800,
+      "height": 40,
+      "type": "text",
+      "content": "Logstash queue usage",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 28,
+      "weight": "bold",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#e6e9f0"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "description",
+      "name": "Description",
+      "x": 40,
+      "y": 80,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 820,
+      "height": 24,
+      "type": "text",
+      "content": "Pipeline capacity across your infrastructure · sample snapshot",
+      "visibility": {
+        "mode": "always",
+        "pick": {
+          "dataset": "source",
+          "mode": "reduce",
+          "matchField": "",
+          "matchValue": "",
+          "timestampField": "",
+          "op": "sum",
+          "reduceField": "",
+          "field": "value"
+        },
+        "operator": ">=",
+        "value": 0,
+        "whenTrue": "show",
+        "onMissing": "hide"
+      },
+      "fontFamily": "studio",
+      "fontSize": 14,
+      "weight": "normal",
+      "align": "left",
+      "vertical": "top",
+      "lineHeight": 1.2,
+      "color": {
+        "kind": "fixed",
+        "value": "#929db2"
+      },
+      "opacity": 1
+    },
+    {
+      "id": "queues",
+      "name": "Queue usage",
+      "x": 40,
+      "y": 142,
+      "visible": true,
+      "locked": false,
+      "parentId": null,
+      "width": 820,
+      "height": 368,
+      "type": "bar",
+      "orientation": "horizontal",
+      "dataset": "source",
+      "category": {
+        "kind": "field",
+        "field": "label"
+      },
+      "value": {
+        "kind": "field",
+        "field": "usage_pct"
+      },
+      "sort": "input",
+      "colorMode": "threshold",
+      "color": {
+        "kind": "fixed",
+        "value": "#6c7df0"
+      },
+      "labels": true,
+      "labelPosition": "outside",
+      "valueFormat": "number",
+      "decimals": 0,
+      "tooltip": true,
+      "axisMax": 100,
+      "showValueAxis": true,
+      "showCategoryAxis": true,
+      "valueTitle": "",
+      "categoryTitle": "",
+      "labelFontSize": 12,
+      "labelColor": "",
+      "showGrid": true,
+      "gridColor": "",
+      "gridWidth": 1,
+      "tickCount": 5,
+      "bandPadding": 0.38,
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      },
+      "warning": 65,
+      "critical": 85,
+      "warningColor": {
+        "kind": "fixed",
+        "value": "#e8b65c"
+      },
+      "criticalColor": {
+        "kind": "fixed",
+        "value": "#ee7686"
+      },
+      "showLegend": true
+    }
+  ]
+}

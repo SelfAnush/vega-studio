@@ -1,0 +1,23 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+*.tsbuildinfo
+coverage/
+
+# Local tooling, conversations, and design inputs
+.opencode/
+opencode.json
+session-*.md
+Input_query_images/
+
+# Secrets and machine-specific settings
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.npmrc
+*.log
+.DS_Store
+Thumbs.db
