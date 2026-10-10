@@ -39,7 +39,7 @@ Actions workflow runs validation on Linux and provides a downloadable production
 
 ## Editing
 
-- Palette (Basic: Text, Rectangle, Ellipse, Line; Charts: horizontal/vertical Bar chart). Select through the canvas or Layers. Properties are organized into Layout, Typography/Appearance, Endpoints, Data, Axes and labels, Thresholds, and Advanced sections. Inputs commit on blur or Enter.
+- Palette (Basic: Text, Rectangle, Ellipse, Line; Charts: horizontal/vertical Bar chart). Select through the canvas or Layers. Properties are organized into Layout, Typography/Appearance, Endpoints, Data, Axes and labels, Thresholds, and Advanced sections. Properties update the canvas as you edit. Incomplete or invalid input keeps the last valid value until corrected.
 - Text supports system font families, size/weight, left/center/right alignment, top/middle/bottom placement, line height, opacity, and explicit multiline content. Long lines clip with an ellipsis at the element width; text never wraps. See `docs/elements.md`.
 - Rectangles and ellipses support solid or no fill, optional stroke (width, solid/dashed/dotted), opacity, corner radius (rectangles), and aspect lock (ellipses compile to native Vega paths, not approximations).
 - Lines use editable start/endpoints (zero width/height allowed for horizontal/vertical lines), endpoint handles, caps, dashes, and exact numeric editing. Endpoints are stored relative to the line origin so grouping preserves them.

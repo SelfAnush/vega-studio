@@ -5,6 +5,47 @@ import { resizeBox, resizeGroup, groupLayers } from "../src/commands";
 import { bounds } from "../src/hierarchy";
 
 describe("editor regressions", () => {
+  it("cancelling a live edit restores full undo and redo history", () => {
+    const s = useEditor.getState(), rectangle = newElement("rectangle");
+    s.open({ ...blankProject(), elements: [rectangle] });
+    for (let i = 0; i < 102; i++) s.edit(rectangle.id, { name: `Layer ${i}` });
+    s.undo();
+    const before = useEditor.getState();
+    const group = Symbol("color picker");
+    s.edit(rectangle.id, { opacity: 0.3 }, group);
+    s.edit(rectangle.id, { opacity: 0.6 }, group);
+    s.edit(rectangle.id, { opacity: 1 }, group);
+    expect(useEditor.getState().project).toEqual(before.project);
+    expect(useEditor.getState().past).toEqual(before.past);
+    expect(useEditor.getState().future).toEqual(before.future);
+    s.redo();
+    expect(useEditor.getState().project.elements[0].name).toBe("Layer 101");
+    const full = useEditor.getState();
+    s.edit(rectangle.id, { opacity: 0.2 }, group);
+    s.edit(rectangle.id, { opacity: 1 }, group);
+    expect(useEditor.getState().past).toEqual(full.past);
+  });
+  it("groups live edits without merging across other edits, undo, or save", () => {
+    const s = useEditor.getState(), rectangle = newElement("rectangle");
+    s.open({ ...blankProject(), elements: [rectangle] });
+    const group = Symbol("opacity edit");
+    s.edit(rectangle.id, { opacity: 0.5 }, group);
+    s.edit(rectangle.id, { opacity: 0.25 }, group);
+    expect(useEditor.getState().past).toHaveLength(1);
+    s.edit(rectangle.id, { name: "Renamed" });
+    s.edit(rectangle.id, { opacity: 0.1 }, group);
+    expect(useEditor.getState().past).toHaveLength(3);
+    s.undo();
+    expect(useEditor.getState().project.elements[0]).toMatchObject({ name: "Renamed", opacity: 0.25 });
+    s.edit(rectangle.id, { opacity: 0.2 }, group);
+    expect(useEditor.getState().past).toHaveLength(3);
+    expect(useEditor.getState().future).toHaveLength(0);
+    s.markSaved();
+    s.edit(rectangle.id, { opacity: 0.3 }, group);
+    expect(useEditor.getState().past).toHaveLength(4);
+    s.undo();
+    expect(useEditor.getState().project.elements[0]).toMatchObject({ opacity: 0.2 });
+  });
   it("clamps group shrinking before a child violates document size limits", () => {
     const rectangle = newElement("rectangle");
     const grouped = groupLayers({ ...blankProject(), elements: [rectangle] }, [rectangle.id]);

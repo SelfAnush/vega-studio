@@ -26,9 +26,9 @@ test("edit, sample data, save/open, and export through the real editor", async (
   await page.getByLabel("Y", { exact: true }).fill("112");
   await page.getByLabel("Y", { exact: true }).press("Tab");
   await page.getByLabel("Height", { exact: true }).fill("8");
+  await expect(page.getByLabel("Height", { exact: true })).toHaveAttribute("aria-invalid", "true");
   await page.getByLabel("Height", { exact: true }).press("Tab");
-  await expect(page.getByRole("alert")).toContainText("height");
-  await page.getByRole("button", { name: "Dismiss" }).click();
+  await expect(page.getByLabel("Height", { exact: true })).not.toHaveValue("8");
   await page.getByLabel("Height", { exact: true }).fill("20");
   await page.getByLabel("Height", { exact: true }).press("Tab");
   await page.getByRole("button", { name: "Queue usage", exact: true }).click();
@@ -112,7 +112,7 @@ test("layer actions, field bindings, viewport and input-safe shortcuts", async (
   await page.getByRole("menuitem", { name: "Rectangle", exact: true }).click();
   await page.getByRole('button',{name:'Fill',exact:true}).click();
   await page.getByLabel('Hex color').fill('#334455');
-  await page.getByRole('button',{name:'Apply color'}).click();
+  await page.getByRole('button',{name:'Done'}).click();
   await page.getByLabel("Opacity", { exact: true }).fill("0.5");
   await page.getByLabel("Opacity", { exact: true }).press("Tab");
   await page.getByRole("button", { name: "Align right", exact: true }).click();

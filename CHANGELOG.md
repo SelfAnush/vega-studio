@@ -9,6 +9,16 @@ Kibana target (`9.2.3`).
 
 ## Unreleased
 
+- All Properties fields now update the canvas during editing, including text,
+  geometry, chart settings, canvas settings, data bindings, and color pickers.
+  Valid input retains focus; invalid drafts preserve the last valid document.
+  Each focused edit is one undo step, and canceling a color edit restores its
+  original value and history.
+
+- Refined canvas selections with zoom-stable outlines and smaller white resize
+  grips over larger pointer targets. Removed floating object-name labels;
+  layer names remain available in Layers and Properties.
+
 - Updated the transitive build dependency `source-map-js` from 1.2.1 to 1.2.2
   for GHSA-68fv-2mgg-jv7q; CI now checks high/critical dependency advisories.
 

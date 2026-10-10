@@ -29,7 +29,10 @@ image, and other future elements are not implemented or advertised as available.
 - Keep Properties vertical at every supported width (240–520px). Preserve its
   12px dropdown-arrow inset. Keep Grid & snapping in Canvas properties.
 - Use PanelHeader for side panels, SettingsSection for disclosures, FormField
-  for controlled inputs, and Field for blur-committed inspector values.
+  for labeled controls and Field for inspector values. The LiveEditing provider
+  enables immediate text, numeric, and color updates in Properties. Each focused
+  input or color-picker session is one undo step; invalid drafts never enter the
+  project. LiveInput and LiveTextarea retain focus while the preview updates.
 - Use TabBar for tab navigation; connect its panel ID and labelled-by ID to the
   corresponding tabpanel. Arrow keys, Home, and End select and focus tabs.
 - Dialogs use a fixed heading, a bounded scrolling body, and a visible action

@@ -1,3 +1,4 @@
+import { LiveInput } from "./liveEditing";
 import { FormField } from "./ui";
 import {
   availableFields,
@@ -121,22 +122,20 @@ export function PickEditor({
       {value.mode === "match" && (
         <Row>
           <Label text="Match field">
-            <input
+            <LiveInput
               aria-label={`${label} match field`}
-              key={value.matchField}
-              defaultValue={value.matchField}
-              onBlur={(e) => {
+              value={value.matchField}
+              onChange={(e) => {
                 if (e.target.value !== value.matchField)
                   set({ matchField: e.target.value });
               }}
             />
           </Label>
           <Label text="Match value">
-            <input
+            <LiveInput
               aria-label={`${label} match value`}
-              key={String(value.matchValue)}
-              defaultValue={String(value.matchValue)}
-              onBlur={(e) => {
+              value={String(value.matchValue)}
+              onChange={(e) => {
                 if (e.target.value !== String(value.matchValue))
                   set({ matchValue: parseScalarInput(e.target.value) });
               }}
@@ -146,11 +145,10 @@ export function PickEditor({
       )}
       {value.mode === "latest" && (
         <Label text="Timestamp field">
-          <input
+          <LiveInput
             aria-label={`${label} timestamp field`}
-            key={value.timestampField}
-            defaultValue={value.timestampField}
-            onBlur={(e) => {
+            value={value.timestampField}
+            onChange={(e) => {
               if (e.target.value !== value.timestampField)
                 set({ timestampField: e.target.value });
             }}
@@ -190,11 +188,10 @@ export function PickEditor({
       )}
       {showField && value.mode !== "reduce" && (
         <Label text="Value field">
-          <input
+          <LiveInput
             aria-label={`${label} value field`}
-            key={value.field}
-            defaultValue={value.field}
-            onBlur={(e) => {
+            value={value.field}
+            onChange={(e) => {
               if (e.target.value !== value.field)
                 set({ field: e.target.value });
             }}
@@ -291,11 +288,10 @@ export function ColorRulesEditor({
               </select>
             </Label>
             <Label text={r.operator === "between" ? "From" : "Value"}>
-              <input
+              <LiveInput
                 aria-label={`${label} rule ${i + 1} value`}
-                key={String(r.value)}
-                defaultValue={String(r.value)}
-                onBlur={(e) => {
+                value={String(r.value)}
+                onChange={(e) => {
                   if (e.target.value !== String(r.value)) {
                     const rules = value.rules.map((x, j) =>
                       j === i
@@ -309,11 +305,10 @@ export function ColorRulesEditor({
             </Label>
             {r.operator === "between" && (
               <Label text="To">
-                <input
+                <LiveInput
                   aria-label={`${label} rule ${i + 1} upper bound`}
-                  key={String(r.value2 ?? "")}
-                  defaultValue={String(r.value2 ?? "")}
-                  onBlur={(e) => {
+                  value={String(r.value2 ?? "")}
+                  onChange={(e) => {
                     const rules = value.rules.map((x, j) =>
                       j === i
                         ? { ...x, value2: parseScalarInput(e.target.value) }
@@ -376,14 +371,14 @@ export function NumMapEditor({
 }) {
   const set = (p: Partial<NumMap>) => onChange({ ...value, ...p });
   const num = (text: string, v: number, key: keyof NumMap, step = 1) => (
-    <label className="field" key={`${text}-${v}`}>
+    <label className="field" key={text}>
       <span>{text}</span>
-      <input
+      <LiveInput
         aria-label={`${label} ${text}`}
         type="number"
-        defaultValue={v}
+        value={v}
         step={step}
-        onBlur={(e) => {
+        onChange={(e) => {
           if (Number(e.target.value) !== v)
             set({ [key]: Number(e.target.value) } as Partial<NumMap>);
         }}
@@ -477,11 +472,11 @@ export function VisibilityEditor({
               </select>
             </Label>
             <Label text="Value">
-              <input
+              <LiveInput
                 aria-label="Visibility value"
-                key={String(value.value)}
-                defaultValue={String(value.value)}
-                onBlur={(e) => {
+
+                value={String(value.value)}
+                onChange={(e) => {
                   if (e.target.value !== String(value.value))
                     set({ value: parseScalarInput(e.target.value) });
                 }}
@@ -490,11 +485,11 @@ export function VisibilityEditor({
           </Row>
           {value.operator === "between" && (
             <Label text="Upper bound">
-              <input
+              <LiveInput
                 aria-label="Visibility upper bound"
-                key={String(value.value2 ?? "")}
-                defaultValue={String(value.value2 ?? "")}
-                onBlur={(e) =>
+
+                value={String(value.value2 ?? "")}
+                onChange={(e) =>
                   set({ value2: parseScalarInput(e.target.value) })
                 }
               />
@@ -567,14 +562,14 @@ export function FormatEditor({
         </select>
       </Label>
       <Label text="Decimal places">
-        <input
+        <LiveInput
           aria-label={`${label} decimal places`}
           type="number"
           min={0}
           max={5}
-          key={decimals}
-          defaultValue={decimals}
-          onBlur={(e) => {
+
+          value={decimals}
+          onChange={(e) => {
             if (Number(e.target.value) !== decimals)
               onChange(format, Number(e.target.value));
           }}

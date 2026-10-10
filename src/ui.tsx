@@ -1,4 +1,5 @@
-import { type ReactNode } from "react";
+import { LiveEditing, LiveInput } from "./liveEditing";
+import { useContext, type ReactNode } from "react";
 import {
   SlidersHorizontal,
   Database,
@@ -62,10 +63,18 @@ export function Field({
   max?: number;
   step?: number;
 }) {
+  const live = useContext(LiveEditing);
   if (type === "color")
     return (
       <ColorPicker label={label} value={String(value)} onChange={onChange} />
     );
+  if (live) return (
+    <label className="field">
+      <span>{label}</span>
+      <LiveInput aria-label={label} type={type} value={value} min={min} max={max} step={step}
+        onChange={(event) => onChange(event.target.value)} />
+    </label>
+  );
   return (
     <label className={`field ${type === "color" ? "color-field" : ""}`}>
       <span>{label}</span>

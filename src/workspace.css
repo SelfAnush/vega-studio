@@ -84,46 +84,51 @@
 .element-overlay {
   position: absolute;
   cursor: move;
-  border: 1.5px solid transparent;
+  border: 0;
+  outline: var(--selection-stroke, 1px) solid transparent;
+  outline-offset: calc(var(--selection-stroke, 1px) / -2);
   touch-action: none;
 }
 .element-overlay:hover {
-  border-color: var(--accent);
+  outline-color: var(--accent);
 }
 .element-overlay.selected {
-  border-color: var(--accent);
+  outline-color: var(--accent);
 }
 .element-overlay.locked {
   cursor: default;
 }
 .group-overlay.selected {
-  border-style: dashed;
+  outline-style: dashed;
 }
-.selection-tag {
+.resize-handle,
+.endpoint-handle {
   position: absolute;
-  top: -24px;
-  left: -1px;
-  background: var(--primary);
-  color: var(--primary-text);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
-  font-size: 11px;
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  white-space: nowrap;
+  border: 0;
+  background: transparent;
+  touch-action: none;
+}
+.resize-handle::before,
+.endpoint-handle::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--grip-size);
+  height: var(--grip-size);
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border: var(--grip-stroke) solid var(--accent);
+  border-radius: var(--grip-radius);
+  background: #fff;
   pointer-events: none;
 }
-/* Elements near the top edge would have the tag clipped, so it moves below. */
-.selection-tag.tag-below {
-  top: auto;
-  bottom: -24px;
+.resize-handle:hover::before,
+.endpoint-handle:hover::before {
+  background: var(--accent);
 }
-.resize-handle {
-  position: absolute;
-  border: 2px solid var(--accent);
-  background: var(--surface);
-  border-radius: 2px;
-  touch-action: none;
+.endpoint-handle::before {
+  border-radius: 50%;
 }
 .rh-nw { cursor: nwse-resize; }
 .rh-ne { cursor: nesw-resize; }
@@ -146,12 +151,6 @@
   z-index: var(--z-ghost);
 }
 .endpoint-handle {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 2px solid var(--accent);
-  background: var(--surface);
-  border-radius: 50%;
   cursor: crosshair;
 }
 .canvas-bottom {

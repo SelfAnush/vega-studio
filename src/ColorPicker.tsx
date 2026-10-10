@@ -1,4 +1,5 @@
-import { useState, type PointerEvent } from "react";
+import { useContext, useRef, useState, type PointerEvent } from "react";
+import { LiveEditing } from "./liveEditing";
 import * as Popover from "@radix-ui/react-popover";
 import { Check, ChevronDown } from "lucide-react";
 import { validHex, hexToHsv, hsvToHex } from "./color";
@@ -12,12 +13,21 @@ export function ColorPicker({
   value: string;
   onChange: (color: string) => void;
 }) {
+  const live = useContext(LiveEditing);
+  const original = useRef(value);
+  const historyGroup = useRef(Symbol("color edit"));
+  const preview = (color: string) => live?.run(historyGroup.current, () => onChange(color));
+  const cancel = () => {
+    if (live) preview(original.current);
+    setOpen(false);
+  };
   const [open, setOpen] = useState(false),
     [hex, setHex] = useState(value),
     [hsv, setHsv] = useState(hexToHsv(value));
   const update = (next: [number, number, number]) => {
     setHsv(next);
     setHex(hsvToHex(...next));
+    preview(hsvToHex(...next));
   };
   const pick = (event: PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -34,6 +44,8 @@ export function ColorPicker({
         open={open}
         onOpenChange={(next) => {
           if (next) {
+            original.current = value;
+            historyGroup.current = Symbol("color edit");
             setHex(value);
             setHsv(hexToHsv(value));
           }
@@ -57,6 +69,7 @@ export function ColorPicker({
             sideOffset={12}
             collisionPadding={16}
             onKeyDown={(e) => e.stopPropagation()}
+            onEscapeKeyDown={() => { if (live) cancel(); }}
           >
             <div className="popover-title">
               {label}
@@ -142,7 +155,7 @@ export function ColorPicker({
               <span
                 className="swatch"
                 title="Original color"
-                style={{ background: value }}
+                style={{ background: original.current }}
               />
               <span
                 className="swatch"
@@ -159,7 +172,10 @@ export function ColorPicker({
                   onChange={(e) => {
                     const text = e.target.value;
                     setHex(text);
-                    if (validHex(text)) setHsv(hexToHsv(text));
+                    if (validHex(text)) {
+                      setHsv(hexToHsv(text));
+                      preview(text.toLowerCase());
+                    }
                   }}
                 />
               </label>
@@ -186,12 +202,13 @@ export function ColorPicker({
                   onClick={() => {
                     setHex(color);
                     setHsv(hexToHsv(color));
+                    preview(color);
                   }}
                 />
               ))}
             </div>
             <div className="color-actions">
-              <button type="button" onClick={() => setOpen(false)}>
+              <button type="button" onClick={cancel}>
                 Cancel
               </button>
               <button
@@ -199,12 +216,12 @@ export function ColorPicker({
                 className="primary"
                 disabled={!validHex(hex)}
                 onClick={() => {
-                  onChange(hex.toLowerCase());
+                  if (!live) onChange(hex.toLowerCase());
                   setOpen(false);
                 }}
               >
                 <Check size={14} />
-                Apply color
+                {live ? "Done" : "Apply color"}
               </button>
             </div>
             <Popover.Arrow className="popover-arrow" />

@@ -9,6 +9,9 @@ import { ancestors, isLocked, subtreeLocked, ordered } from "./hierarchy";
 interface Editor {
   project: Project;
   past: Project[];
+  historyGroup: symbol | null;
+  historyGroupFuture: Project[];
+  historyGroupPast: Project[];
   future: Project[];
   saved: string;
   selected: string | null;
@@ -45,8 +48,8 @@ interface Editor {
   select: (id: string | null, additive?: boolean) => void;
   viewport: (zoom: number, pan?: { x: number; y: number }) => void;
   setTool: (tool: Editor["tool"]) => void;
-  commit: (next: Project) => void;
-  edit: (id: string, change: Partial<Element>) => void;
+  commit: (next: Project, historyGroup?: symbol) => void;
+  edit: (id: string, change: Partial<Element>, historyGroup?: symbol) => void;
   undo: () => void;
   redo: () => void;
   open: (p: Project) => void;
@@ -96,6 +99,9 @@ function storedTheme(): "light" | "dark" {
 export const useEditor = create<Editor>((set, get) => ({
   project: initial,
   past: [],
+  historyGroup: null,
+  historyGroupFuture: [],
+  historyGroupPast: [],
   future: [],
   saved: JSON.stringify(initial),
   selected: null,
@@ -155,15 +161,28 @@ export const useEditor = create<Editor>((set, get) => ({
   viewport: (zoom, pan) =>
     set({ zoom: Math.min(2, Math.max(0.15, zoom)), ...(pan ? { pan } : {}) }),
   setTool: (tool) => set({ tool }),
-  commit: (next) => {
+  commit: (next, historyGroup) => {
     const s = get();
     const validated = validateProject(next);
     const project = { ...validated, elements: ordered(validated) };
     if (JSON.stringify(project) === JSON.stringify(s.project)) return;
-    set({ project, past: [...s.past.slice(-99), s.project], future: [],
+    // Returning a live edit to its starting value (including color Cancel)
+    // should leave both undo and the pre-existing redo history untouched.
+    if (historyGroup && historyGroup === s.historyGroup &&
+        JSON.stringify(project) === JSON.stringify(s.past.at(-1))) {
+      set({ project, past: s.historyGroupPast, future: s.historyGroupFuture,
+        historyGroup: null, historyGroupFuture: [], historyGroupPast: [],
+        ...validSelection(project, s.selection, s.collapsed) });
+      return;
+    }
+    set({ project,
+      past: historyGroup && historyGroup === s.historyGroup ? s.past : [...s.past.slice(-99), s.project],
+      historyGroupFuture: historyGroup === s.historyGroup ? s.historyGroupFuture : historyGroup ? s.future : [],
+      historyGroupPast: historyGroup === s.historyGroup ? s.historyGroupPast : historyGroup ? s.past : [],
+      historyGroup: historyGroup ?? null, future: [],
       ...validSelection(project, s.selection, s.collapsed) });
   },
-  edit: (id, change) => {
+  edit: (id, change, historyGroup) => {
     const s = get(),
       e = s.project.elements.find((e) => e.id === id);
     if (!e) return;
@@ -183,7 +202,7 @@ export const useEditor = create<Editor>((set, get) => ({
       elements: s.project.elements.map((e) =>
         e.id === id ? ({ ...e, ...change } as Element) : e,
       ),
-    });
+    }, historyGroup);
   },
   undo: () => {
     const s = get(),
@@ -191,6 +210,9 @@ export const useEditor = create<Editor>((set, get) => ({
     if (p)
       set({
         project: p,
+        historyGroup: null,
+        historyGroupFuture: [],
+        historyGroupPast: [],
         ...validSelection(p, s.selection, s.collapsed),
         past: s.past.slice(0, -1),
         future: [s.project, ...s.future],
@@ -202,6 +224,9 @@ export const useEditor = create<Editor>((set, get) => ({
     if (p)
       set({
         project: p,
+        historyGroup: null,
+        historyGroupFuture: [],
+        historyGroupPast: [],
         ...validSelection(p, s.selection, s.collapsed),
         past: [...s.past, s.project],
         future: s.future.slice(1),
@@ -212,6 +237,9 @@ export const useEditor = create<Editor>((set, get) => ({
     set({
       project,
       documentEpoch: get().documentEpoch + 1,
+      historyGroup: null,
+      historyGroupFuture: [],
+      historyGroupPast: [],
       pasteStep: 0,
       past: [],
       future: [],
@@ -224,5 +252,5 @@ export const useEditor = create<Editor>((set, get) => ({
       saved: JSON.stringify(project),
     });
   },
-  markSaved: () => set({ saved: JSON.stringify(get().project) }),
+  markSaved: () => set({ saved: JSON.stringify(get().project), historyGroup: null, historyGroupFuture: [], historyGroupPast: [] }),
 }));

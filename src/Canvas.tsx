@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { BarChart3 } from "lucide-react";
 import { VegaRenderer } from "./VegaRenderer";
 import { useEditor } from "./store";
@@ -458,7 +458,8 @@ export function Canvas({
                   element.type === "ellipse" ||
                   element.type === "bar" ||
                   element.type === "group";
-                const hs = 10 / zoom;
+                // Keep the pointer target generous while drawing a smaller, zoom-stable grip.
+                const hs = 16 / zoom;
                 return (
                   <div
                     key={element.id}
@@ -468,6 +469,12 @@ export function Canvas({
                     data-testid={`overlay-${element.id}`}
                     className={`element-overlay ${selected ? "selected" : ""} ${locked ? "locked" : ""} ${group ? "group-overlay" : ""}`}
                     style={{
+                      ...({
+                        "--selection-stroke": `${1 / zoom}px`,
+                        "--grip-size": `${8 / zoom}px`,
+                        "--grip-stroke": `${1.5 / zoom}px`,
+                        "--grip-radius": `${2 / zoom}px`,
+                      } as CSSProperties),
                       left: overlay.left,
                       top: overlay.top,
                       width: overlay.width,
@@ -656,12 +663,6 @@ export function Canvas({
                     )}
                     {selected && !dragging && (
                       <>
-                        <span
-                          className={`selection-tag ${overlay.top < 26 ? "tag-below" : ""}`}
-                        >
-                          {element.name}
-                          {locked ? " · Locked" : ""}
-                        </span>
                         {showHandles && resizable && selection.length === 1 && (
                           <>
                             {HANDLES.map(({ id, cursor }) => {

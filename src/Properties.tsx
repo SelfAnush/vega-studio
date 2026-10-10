@@ -1,3 +1,4 @@
+import { LiveEditing, LiveTextarea } from "./liveEditing";
 import {
   Field,
   Select,
@@ -127,7 +128,7 @@ export function Properties({
   duplicate: () => void;
   remove: () => void;
 }) {
-  const { project, selected, selection, edit, commit, select } = useEditor();
+  const { project, selected, selection, edit, commit: commitProject, select } = useEditor();
   const e = project.elements.find((e) => e.id === selected);
   const locked = e ? isLocked(project, e.id) : false;
   const panelRef = useRef<HTMLElement>(null);
@@ -155,10 +156,12 @@ export function Properties({
       onError((err as Error).message);
     }
   };
-  const change = (p: Partial<Element>) => {
+  const activeHistory = useRef<symbol | undefined>(undefined);
+  const commit = (next: typeof project) => commitProject(next, activeHistory.current);
+  const change = (p: Partial<Element>, historyGroup = activeHistory.current) => {
     if (e)
       try {
-        edit(e.id, p);
+        edit(e.id, p, historyGroup);
         onError("");
       } catch (err) {
         onError((err as Error).message);
@@ -173,7 +176,7 @@ export function Properties({
     step = 1,
   ) => (
     <Field
-      key={`${e?.id}-${key}-${value}`}
+      key={`${e?.id}-${key}`}
       label={label}
       type="number"
       value={value}
@@ -198,6 +201,10 @@ export function Properties({
     </div>
   );
   return (
+    <LiveEditing.Provider value={{ run: (group, action) => {
+      activeHistory.current = group;
+      try { action(); } finally { activeHistory.current = undefined; }
+    } }}>
     <aside
       className="properties"
       aria-label="Properties"
@@ -256,12 +263,12 @@ export function Properties({
             <fieldset
               disabled={locked}
               className="inspector-fields"
-              key={e.type}
+              key={`${view.documentEpoch}-${e.id}`}
             >
               <InspectorSection title="Layer">
                 <div className="field-stack layer-identity">
                   <Field
-                    key={e.id + e.name}
+                    key={e.id}
                     label="Layer name"
                     value={e.name}
                     onChange={(name) => change({ name })}
@@ -373,12 +380,12 @@ export function Properties({
                   <InspectorSection title="Content">
                     <label className="field">
                       <span>Content</span>
-                      <textarea
+                      <LiveTextarea
                         aria-label="Content"
-                        key={e.id + e.content}
-                        defaultValue={e.content}
+                        key={e.id}
+                        value={e.content}
                         rows={3}
-                        onBlur={(e2) => {
+                        onChange={(e2) => {
                           if (e2.target.value !== e.content)
                             change({ content: e2.target.value });
                         }}
@@ -738,14 +745,14 @@ export function Properties({
                       {num("Start X", e.x, "x", -4000)}
                       {num("Start Y", e.y, "y", -4000)}
                       <Field
-                        key={`${e.id}-x2-${e.x + e.x2}`}
+                        key={`${e.id}-x2`}
                         label="End X"
                         type="number"
                         value={e.x + e.x2}
                         onChange={(v) => change({ x2: Number(v) - e.x })}
                       />
                       <Field
-                        key={`${e.id}-y2-${e.y + e.y2}`}
+                        key={`${e.id}-y2`}
                         label="End Y"
                         type="number"
                         value={e.y + e.y2}
@@ -1009,13 +1016,13 @@ export function Properties({
                     </div>
                     <div className="field-stack">
                       <Field
-                        key={`${e.id}-value-title-${e.valueTitle}`}
+                        key={`${e.id}-value-title`}
                         label="Value axis title"
                         value={e.valueTitle}
                         onChange={(valueTitle) => change({ valueTitle })}
                       />
                       <Field
-                        key={`${e.id}-category-title-${e.categoryTitle}`}
+                        key={`${e.id}-category-title`}
                         label="Category axis title"
                         value={e.categoryTitle}
                         onChange={(categoryTitle) => change({ categoryTitle })}
@@ -1194,7 +1201,7 @@ export function Properties({
                       {(["top", "right", "bottom", "left"] as const).map(
                         (side) => (
                           <Field
-                            key={`${e.id}-pad-${side}-${e.padding[side]}`}
+                            key={`${e.id}-pad-${side}`}
                             label={`Padding ${side}`}
                             type="number"
                             value={e.padding[side]}
@@ -1235,7 +1242,7 @@ export function Properties({
               <div className="field-stack">
                 {(["width", "height"] as const).map((key) => (
                   <Field
-                    key={key + project.canvas[key]}
+                    key={`${view.documentEpoch}-canvas-${key}`}
                     label={`Canvas ${key}`}
                     type="number"
                     value={project.canvas[key]}
@@ -1324,5 +1331,6 @@ export function Properties({
         </div>
       )}
     </aside>
+    </LiveEditing.Provider>
   );
 }
