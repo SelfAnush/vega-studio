@@ -406,7 +406,9 @@ export default function App() {
         }}
       />
       <EditorDialog mode={mode} close={() => setMode(null)} />
-      <Analytics />
+      {import.meta.env.PROD && import.meta.env.VITE_WEB_ANALYTICS !== "false" && (
+        <Analytics />
+      )}
     </div>
   );
 }

@@ -17,7 +17,7 @@ npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:5173. No accounts, backend, external services, or live Elasticsearch access are required. Dependencies are pinned in `package.json` and `package-lock.json`.
+Open http://127.0.0.1:5173. No accounts, backend, external services, or live Elasticsearch access are required. Dependencies are pinned in `package.json` and `package-lock.json`. Production builds include optional Vercel page-view analytics; see [configuration and opt-out](docs/configuration.md#web-analytics).
 
 ```sh
 npm run build

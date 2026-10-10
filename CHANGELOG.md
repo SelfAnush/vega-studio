@@ -9,6 +9,9 @@ Kibana target (`9.2.3`).
 
 ## Unreleased
 
+- Added Vercel page-view analytics to production builds, with development disabled
+  and a build-time opt-out for other hosts.
+
 - Updated the transitive build dependency `source-map-js` from 1.2.1 to 1.2.2
   for GHSA-68fv-2mgg-jv7q; CI now checks high/critical dependency advisories.
 
