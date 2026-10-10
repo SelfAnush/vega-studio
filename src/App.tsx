@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { ElementPalette } from "./ElementPalette";
 import {
   Activity,
@@ -405,6 +406,7 @@ export default function App() {
         }}
       />
       <EditorDialog mode={mode} close={() => setMode(null)} />
+      <Analytics />
     </div>
   );
 }
