@@ -1,8 +1,14 @@
 # Security
 
-Vega Studio is a browser-based visual editor without a backend, accounts, analytics,
+Vega Studio is a browser-based visual editor without an application backend, accounts,
 or live Elasticsearch connections. Exported Kibana specifications can query
 Elasticsearch when executed inside Kibana; that environment controls access.
+
+Production builds include Vercel Web Analytics for page views. The application
+does not send project contents, sample rows, query configuration, or editor actions
+as analytics events. Analytics is disabled during development and can be disabled
+for production builds with `VITE_WEB_ANALYTICS=false`; see
+[deployment configuration](docs/configuration.md#web-analytics).
 
 Project files contain inline rows, query configuration, and response fixtures.
 Do not include passwords, access tokens, real private records, or credentials.

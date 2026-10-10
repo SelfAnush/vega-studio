@@ -18,6 +18,22 @@ node scripts/copy-notices.mjs
 Replace `vega-studio` with the deployment path. Root hosting uses the default
 `/`.
 
+## Web Analytics
+
+Production builds include Vercel Web Analytics. In the Vercel project dashboard,
+enable **Analytics**, then deploy the updated branch. Enabling it before deployment
+makes the analytics endpoints available. See the
+[official setup guide](https://vercel.com/docs/analytics/quickstart).
+
+The integration records page views; it does not add custom events for editor
+interactions or send project contents. Analytics is disabled by `npm run dev`.
+
+For other static hosts or builds without analytics, set `VITE_WEB_ANALYTICS=false`
+in the build environment (or in an uncommitted `.env.local`) before running
+`npm run build`. This is a build-time option: changing it requires a rebuild.
+Without Vercel's analytics endpoints, an enabled production preview may report a
+missing analytics script; editor functionality does not depend on that script.
+
 ## Example Elasticsearch dataset
 
 In **Sample data → Add Elasticsearch dataset**, configure:
